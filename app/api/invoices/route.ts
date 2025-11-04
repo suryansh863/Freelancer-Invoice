@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase'
 import { invoiceSchema, type ApiResponse, type InvoiceFormData } from '@/lib/validations'
 import { calculateInvoiceTotals } from '@/lib/calculations'
 import { shouldUseFallback } from '@/lib/fallback-storage'
+import { demoStorage } from '@/lib/demo-data'
 
 /**
  * POST /api/invoices
@@ -31,69 +32,20 @@ export async function POST(request: NextRequest) {
     let newInvoice
 
     if (shouldUseFallback()) {
-      // Use fallback storage for development
-      console.log('Using fallback storage for invoices')
+      // Use demo storage for development
+      console.log('Using demo storage for invoices')
       
       try {
-        const fs = require('fs')
-        const path = require('path')
-        const invoicesFile = path.join(process.cwd(), 'data', 'invoices.json')
-        const itemsFile = path.join(process.cwd(), 'data', 'invoice_items.json')
-        
-        // Ensure data directory exists
-        const dataDir = path.dirname(invoicesFile)
-        if (!fs.existsSync(dataDir)) {
-          fs.mkdirSync(dataDir, { recursive: true })
-        }
-
-        // Read existing data
-        let invoices = []
-        let invoiceItems = []
-        
-        if (fs.existsSync(invoicesFile)) {
-          invoices = JSON.parse(fs.readFileSync(invoicesFile, 'utf-8'))
-        }
-        if (fs.existsSync(itemsFile)) {
-          invoiceItems = JSON.parse(fs.readFileSync(itemsFile, 'utf-8'))
-        }
-
-        // Generate invoice number
-        const invoiceNumber = `INV-${String(invoices.length + 1).padStart(3, '0')}`
-
-        // Create new invoice
-        const invoiceId = Date.now().toString(36) + Math.random().toString(36).substr(2)
-        
-        newInvoice = {
-          id: invoiceId,
-          invoice_number: invoiceNumber,
+        const invoiceToCreate = {
           client_id,
           ...invoiceData,
-          status: 'draft',
           amount: totals.subtotal,
-          ...totals,
-          payment_status: 'pending',
-          paid_amount: 0,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
+          ...totals
         }
 
-        // Create invoice items
-        const newItems = items.map(item => ({
-          id: Date.now().toString(36) + Math.random().toString(36).substr(2),
-          invoice_id: invoiceId,
-          ...item,
-          created_at: new Date().toISOString()
-        }))
-
-        invoices.push(newInvoice)
-        invoiceItems.push(...newItems)
-
-        fs.writeFileSync(invoicesFile, JSON.stringify(invoices, null, 2))
-        fs.writeFileSync(itemsFile, JSON.stringify(invoiceItems, null, 2))
-
-        newInvoice.items = newItems
+        newInvoice = demoStorage.addInvoice(invoiceToCreate, items)
       } catch (error) {
-        console.error('Fallback storage error:', error)
+        console.error('Demo storage error:', error)
         return NextResponse.json<ApiResponse>({
           success: false,
           message: 'Failed to save invoice',
@@ -191,41 +143,8 @@ export async function GET() {
     let invoices = []
 
     if (shouldUseFallback()) {
-      // Use fallback storage
-      try {
-        const fs = require('fs')
-        const path = require('path')
-        const invoicesFile = path.join(process.cwd(), 'data', 'invoices.json')
-        const itemsFile = path.join(process.cwd(), 'data', 'invoice_items.json')
-        const clientsFile = path.join(process.cwd(), 'data', 'clients.json')
-        
-        let invoicesData = []
-        let itemsData = []
-        let clientsData = []
-
-        if (fs.existsSync(invoicesFile)) {
-          invoicesData = JSON.parse(fs.readFileSync(invoicesFile, 'utf-8'))
-        }
-        if (fs.existsSync(itemsFile)) {
-          itemsData = JSON.parse(fs.readFileSync(itemsFile, 'utf-8'))
-        }
-        if (fs.existsSync(clientsFile)) {
-          clientsData = JSON.parse(fs.readFileSync(clientsFile, 'utf-8'))
-        }
-
-        // Join data
-        invoices = invoicesData.map(invoice => ({
-          ...invoice,
-          client: clientsData.find(client => client.id === invoice.client_id),
-          items: itemsData.filter(item => item.invoice_id === invoice.id)
-        }))
-
-        // Sort by created_at desc
-        invoices.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-      } catch (error) {
-        console.error('Fallback storage error:', error)
-        invoices = []
-      }
+      // Use demo storage
+      invoices = demoStorage.getInvoices()
     } else {
       // Use Supabase
       const { data, error } = await supabaseAdmin

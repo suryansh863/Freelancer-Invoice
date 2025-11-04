@@ -22,20 +22,13 @@ export default function InvoiceDetailPage() {
 
   const fetchInvoice = async () => {
     try {
-      // For now, we'll fetch from the list and find the specific invoice
-      // In a real app, you'd have a specific endpoint for single invoice
-      const response = await fetch('/api/invoices')
+      const response = await fetch(`/api/invoices/${invoiceId}`)
       const result = await response.json()
 
       if (result.success) {
-        const foundInvoice = result.data.find((inv: Invoice) => inv.id === invoiceId)
-        if (foundInvoice) {
-          setInvoice(foundInvoice)
-        } else {
-          setError('Invoice not found')
-        }
+        setInvoice(result.data)
       } else {
-        setError('Failed to fetch invoice')
+        setError(result.message || 'Failed to fetch invoice')
       }
     } catch (error) {
       console.error('Failed to fetch invoice:', error)

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { clientSchema, type ApiResponse, type ClientFormData } from '@/lib/validations'
-import { fallbackStorage, shouldUseFallback } from '@/lib/fallback-storage'
+import { shouldUseFallback } from '@/lib/fallback-storage'
+import { demoStorage } from '@/lib/demo-data'
 
 /**
  * POST /api/clients
@@ -27,39 +28,13 @@ export async function POST(request: NextRequest) {
     let newClient
 
     if (shouldUseFallback()) {
-      // Use fallback storage for development
-      console.log('Using fallback storage for clients')
+      // Use demo storage for development
+      console.log('Using demo storage for clients')
       
       try {
-        // For fallback, we'll store in a separate file
-        const fs = require('fs')
-        const path = require('path')
-        const clientsFile = path.join(process.cwd(), 'data', 'clients.json')
-        
-        // Ensure data directory exists
-        const dataDir = path.dirname(clientsFile)
-        if (!fs.existsSync(dataDir)) {
-          fs.mkdirSync(dataDir, { recursive: true })
-        }
-
-        // Read existing clients
-        let clients = []
-        if (fs.existsSync(clientsFile)) {
-          clients = JSON.parse(fs.readFileSync(clientsFile, 'utf-8'))
-        }
-
-        // Create new client
-        newClient = {
-          id: Date.now().toString(36) + Math.random().toString(36).substr(2),
-          ...clientData,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        }
-
-        clients.push(newClient)
-        fs.writeFileSync(clientsFile, JSON.stringify(clients, null, 2))
+        newClient = demoStorage.addClient(clientData)
       } catch (error) {
-        console.error('Fallback storage error:', error)
+        console.error('Demo storage error:', error)
         return NextResponse.json<ApiResponse>({
           success: false,
           message: 'Failed to save client',
@@ -112,19 +87,8 @@ export async function GET() {
     let clients = []
 
     if (shouldUseFallback()) {
-      // Use fallback storage
-      try {
-        const fs = require('fs')
-        const path = require('path')
-        const clientsFile = path.join(process.cwd(), 'data', 'clients.json')
-        
-        if (fs.existsSync(clientsFile)) {
-          clients = JSON.parse(fs.readFileSync(clientsFile, 'utf-8'))
-        }
-      } catch (error) {
-        console.error('Fallback storage error:', error)
-        clients = []
-      }
+      // Use demo storage
+      clients = demoStorage.getClients()
     } else {
       // Use Supabase
       const { data, error } = await supabaseAdmin
