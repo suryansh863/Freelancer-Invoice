@@ -18,7 +18,18 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <nav className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
-            <div className="flex items-center">
+            <div className="flex items-center space-x-4">
+              <Link 
+                href="/" 
+                className="flex items-center text-gray-600 hover:text-gray-800 transition-colors"
+                title="Back to Landing Page"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span className="text-sm font-medium">Back to Home</span>
+              </Link>
+              <div className="h-6 w-px bg-gray-300"></div>
               <Link href="/dashboard" className="flex items-center">
                 <span className="text-2xl font-bold text-blue-600">💰</span>
                 <span className="ml-2 text-xl font-bold text-gray-900">Invoice Tracker</span>
