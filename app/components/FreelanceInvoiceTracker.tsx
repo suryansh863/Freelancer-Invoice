@@ -181,12 +181,20 @@ const FreelanceInvoiceTracker: React.FC = () => {
             <div className="flex items-center">
               <div className="text-2xl font-bold text-blue-600">💰 Freelance Invoice Tracker</div>
             </div>
-            <button 
-              onClick={() => document.getElementById('waitlist-form')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-            >
-              Join Waitlist
-            </button>
+            <div className="flex items-center space-x-4">
+              <a 
+                href="/dashboard" 
+                className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                Dashboard
+              </a>
+              <button 
+                onClick={() => document.getElementById('waitlist-form')?.scrollIntoView({ behavior: 'smooth' })}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              >
+                Join Waitlist
+              </button>
+            </div>
           </div>
         </div>
       </header>
