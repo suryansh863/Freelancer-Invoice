@@ -16,6 +16,10 @@ build/
 .env.test.local
 .env.production.local
 
+# Local development data
+data/
+*.json
+
 # IDE
 .vscode/
 .idea/

@@ -12,7 +12,10 @@
     "next": "14.0.0",
     "react": "^18",
     "react-dom": "^18",
-    "@heroicons/react": "^2.0.18"
+    "@heroicons/react": "^2.0.18",
+    "@supabase/supabase-js": "^2.38.0",
+    "resend": "^2.1.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "typescript": "^5",

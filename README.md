@@ -13,11 +13,19 @@ A modern, responsive landing page for an invoicing and payment tracking tool bui
 
 ## 🛠 Tech Stack
 
+### Frontend
 - **Next.js 14** - React framework with App Router
 - **TypeScript** - Type-safe development
 - **TailwindCSS** - Utility-first CSS framework
 - **React Hooks** - Modern state management
 - **Responsive Design** - Mobile-first approach
+
+### Backend
+- **Next.js API Routes** - Serverless backend functions
+- **Supabase** - PostgreSQL database with real-time features
+- **Zod** - Runtime type validation and parsing
+- **Resend** - Email delivery service
+- **File Storage Fallback** - Local development without external dependencies
 
 ## 📦 Installation
 
@@ -32,12 +40,20 @@ cd Freelancer-Invoice
 npm install
 ```
 
-3. Run the development server:
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+# Edit .env.local with your configuration
+```
+
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+> **Note:** The app works out of the box with file-based storage for development. For production, set up Supabase following the [SETUP.md](SETUP.md) guide.
 
 ## 🎯 Target Audience
 
@@ -56,6 +72,16 @@ Indian freelancers including:
 - **Local**: UPI payments and Indian banking integration
 - **Simple**: No complex setup or learning curve
 - **Professional**: Beautiful invoice templates and client management
+
+## 🚀 Backend Features
+
+- **Secure Waitlist API** - Capture and store user signups
+- **Email Notifications** - Welcome emails with Resend integration
+- **Data Validation** - Server-side validation with Zod schemas
+- **Duplicate Prevention** - Prevent multiple signups with same email
+- **Flexible Storage** - Supabase for production, file storage for development
+- **Type Safety** - Full TypeScript implementation
+- **Error Handling** - Comprehensive error handling and logging
 
 ## 📱 Responsive Design
 

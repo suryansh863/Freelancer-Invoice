@@ -8,14 +8,26 @@ interface FormData {
   profession: string
 }
 
+interface SubmissionState {
+  isSubmitting: boolean
+  isSubmitted: boolean
+  error: string | null
+  successMessage: string | null
+}
+
 const FreelanceInvoiceTracker: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     profession: ''
   })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  
+  const [submissionState, setSubmissionState] = useState<SubmissionState>({
+    isSubmitting: false,
+    isSubmitted: false,
+    error: null,
+    successMessage: null
+  })
 
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -24,25 +36,71 @@ const FreelanceInvoiceTracker: React.FC = () => {
       ...prev,
       [name]: value
     }))
+    
+    // Clear errors when user starts typing
+    if (submissionState.error) {
+      setSubmissionState(prev => ({ ...prev, error: null }))
+    }
   }
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
+    
+    setSubmissionState(prev => ({
+      ...prev,
+      isSubmitting: true,
+      error: null,
+      successMessage: null
+    }))
 
-    // Simulate API call
-    setTimeout(() => {
-      console.log('Waitlist signup:', formData)
-      setIsSubmitted(true)
-      setIsSubmitting(false)
-      
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setIsSubmitted(false)
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setSubmissionState({
+          isSubmitting: false,
+          isSubmitted: true,
+          error: null,
+          successMessage: result.message
+        })
+        
+        // Reset form after successful submission
         setFormData({ name: '', email: '', profession: '' })
-      }, 3000)
-    }, 1500)
+        
+        // Reset success state after 5 seconds
+        setTimeout(() => {
+          setSubmissionState(prev => ({
+            ...prev,
+            isSubmitted: false,
+            successMessage: null
+          }))
+        }, 5000)
+      } else {
+        setSubmissionState({
+          isSubmitting: false,
+          isSubmitted: false,
+          error: result.error || result.message,
+          successMessage: null
+        })
+      }
+    } catch (error) {
+      console.error('Submission error:', error)
+      setSubmissionState({
+        isSubmitting: false,
+        isSubmitted: false,
+        error: 'Network error. Please check your connection and try again.',
+        successMessage: null
+      })
+    }
   }
 
   const features = [
@@ -157,8 +215,18 @@ const FreelanceInvoiceTracker: React.FC = () => {
             <div id="waitlist-form" className="bg-white p-8 rounded-2xl shadow-xl max-w-2xl mx-auto">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Join the Waitlist - Get Early Access</h3>
               
-              {!isSubmitted ? (
+              {!submissionState.isSubmitted ? (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Error Message */}
+                  {submissionState.error && (
+                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                      <div className="flex items-center">
+                        <span className="text-red-500 mr-2">⚠️</span>
+                        <span>{submissionState.error}</span>
+                      </div>
+                    </div>
+                  )}
+                  
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                       type="text"
@@ -167,7 +235,8 @@ const FreelanceInvoiceTracker: React.FC = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      disabled={submissionState.isSubmitting}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                     <input
                       type="email"
@@ -176,7 +245,8 @@ const FreelanceInvoiceTracker: React.FC = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      disabled={submissionState.isSubmitting}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
                   <select
@@ -184,7 +254,8 @@ const FreelanceInvoiceTracker: React.FC = () => {
                     value={formData.profession}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    disabled={submissionState.isSubmitting}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <option value="">Select your profession</option>
                     <option value="graphic-designer">Graphic Designer</option>
@@ -197,17 +268,32 @@ const FreelanceInvoiceTracker: React.FC = () => {
                   </select>
                   <button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={submissionState.isSubmitting}
                     className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
-                    {isSubmitting ? 'Joining...' : 'Join Waitlist'}
+                    {submissionState.isSubmitting ? (
+                      <span className="flex items-center justify-center">
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Joining...
+                      </span>
+                    ) : (
+                      'Join Waitlist'
+                    )}
                   </button>
                 </form>
               ) : (
                 <div className="text-center py-8">
                   <div className="text-6xl text-green-500 mb-4">✓</div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Welcome aboard!</h3>
-                  <p className="text-gray-600">You're now on the waitlist. We'll notify you as soon as we launch.</p>
+                  <p className="text-gray-600 mb-4">{submissionState.successMessage}</p>
+                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                    <p className="text-sm">
+                      🎉 You're now on the waitlist! Check your email for a welcome message with exclusive early access details.
+                    </p>
+                  </div>
                 </div>
               )}
               
