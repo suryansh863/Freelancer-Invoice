@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvoiceWala - Invoice & Payment Tracking for Indian Freelancers</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: #2563eb;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        .hero {
+            background: #f8fafc;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+        .highlight {
+            color: #2563eb;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        input, select {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 16px;
+            flex: 1;
+            min-width: 200px;
+        }
+        .cta-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            min-width: 200px;
+        }
+        .cta-btn:hover {
+            background: #1d4ed8;
+        }
+        .features {
+            padding: 60px 20px;
+            background: white;
+        }
+        .features h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #1e293b;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .feature-card h3 {
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        .pricing {
+            background: #1e293b;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .pricing h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #fbbf24;
+            margin: 1rem 0;
+        }
+        .faq {
+            padding: 60px 20px;
+            background: #f8fafc;
+        }
+        .faq h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #1e293b;
+        }
+        .faq-item {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        .footer {
+            background: #1e293b;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .form-row {
+                flex-direction: column;
+            }
+            input, select, .cta-btn {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>💰 InvoiceWala</h1>
+        <p>Invoice & Payment Tracking for Indian Freelancers</p>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Finally, an invoicing tool <span class="highlight">built for Indian freelancers</span></h1>
+            <p>Stop juggling Excel sheets, WhatsApp messages, and confusing tax calculations. Get paid faster with GST-compliant invoices, automatic TDS calculations, and UPI payment links.</p>
+            
+            <div class="form-container">
+                <h3>Join the Waitlist - Get Early Access</h3>
+                <form onsubmit="handleSubmit(event)">
+                    <div class="form-row">
+                        <input type="text" name="name" placeholder="Your name" required>
+                        <input type="email" name="email" placeholder="Email address" required>
+                    </div>
+                    <div class="form-row">
+                        <select name="profession" required>
+                            <option value="">Select your profession</option>
+                            <option value="graphic-designer">Graphic Designer</option>
+                            <option value="content-writer">Content Writer</option>
+                            <option value="developer">Developer</option>
+                            <option value="digital-marketer">Digital Marketer</option>
+                            <option value="consultant">Consultant</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <button type="submit" class="cta-btn">Get Early Access</button>
+                    </div>
+                </form>
+                <p style="margin-top: 1rem; color: #64748b;">👥 <strong>150+ freelancers</strong> already signed up</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Why Indian freelancers choose InvoiceWala</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🧮 Auto TDS Calculator</h3>
+                    <p>Automatic TDS calculations based on client type and income slab. Never worry about tax compliance again.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📄 GST Compliant Invoices</h3>
+                    <p>Professional, GST-compliant invoice templates. Add your GSTIN and generate invoices in seconds.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📱 UPI Payment Links</h3>
+                    <p>Generate UPI QR codes and Razorpay payment links. Get paid instantly via PhonePe, GPay, or Paytm.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔔 Auto Payment Reminders</h3>
+                    <p>Automated payment reminders via email and WhatsApp. Never chase clients manually again.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📊 Income Reports</h3>
+                    <p>Track your earnings, pending payments, and tax obligations. Perfect for ITR filing and business planning.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>👥 Client Management</h3>
+                    <p>Store client details, track project history, and manage all your business relationships in one place.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <div class="container">
+            <h2>Simple, Affordable Pricing</h2>
+            <div class="price">₹299/month</div>
+            <p>vs ₹1200+ for Zoho or FreshBooks</p>
+            <p>✅ 14-day free trial • ✅ No setup fees • ✅ Cancel anytime</p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <h3>Is InvoiceWala free to use?</h3>
+                <p>We offer a 14-day free trial. After that, it's just ₹299/month - much more affordable than Zoho (₹1200+) or FreshBooks (₹1500+).</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Does it support GST and TDS calculations?</h3>
+                <p>Yes! InvoiceWala automatically calculates TDS based on client type and generates GST-compliant invoices with proper GSTIN formatting.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Which payment methods are supported?</h3>
+                <p>We integrate with UPI (PhonePe, GPay, Paytm), Razorpay, and traditional bank transfers. Clients can pay instantly via QR codes.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Is my data secure?</h3>
+                <p>Absolutely. We use bank-grade encryption and never share your data with third parties. Your information is completely safe.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Can I export data for ITR filing?</h3>
+                <p>Yes! Generate detailed income reports, TDS summaries, and export all data as PDFs or Excel files for CA consultations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3>💰 InvoiceWala</h3>
+            <p>Built with ❤️ for Indian freelancers</p>
+            <p>Launch expected: January 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const profession = formData.get('profession');
+            
+            const button = form.querySelector('.cta-btn');
+            const originalText = button.textContent;
+            
+            // Show loading state
+            button.textContent = 'Joining...';
+            button.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                button.textContent = '✅ Joined!';
+                button.style.background = '#10b981';
+                
+                alert(`Welcome aboard, ${name}! You're now on the waitlist. We'll notify you as soon as InvoiceWala launches.`);
+                
+                // Reset form
+                setTimeout(() => {
+                    form.reset();
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    button.style.background = '#2563eb';
+                }, 3000);
+            }, 1500);
+            
+            // Log the signup (replace with actual API call)
+            console.log('Waitlist signup:', { name, email, profession });
+        }
+    </script>
+</body>
+</html>
