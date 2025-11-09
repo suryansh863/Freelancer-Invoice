@@ -1,5 +1,5 @@
 // Demo data for development mode
-import { Client, Invoice } from './validations'
+import type { Client, Invoice } from './validations'
 
 // In-memory storage for demo purposes
 let demoClients: Client[] = [

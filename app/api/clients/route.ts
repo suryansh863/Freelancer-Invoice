@@ -11,19 +11,22 @@ import { demoStorage } from '@/lib/demo-data'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
+    console.log('Received client data:', body)
     
     // Validate input data
     const validationResult = clientSchema.safeParse(body)
     
     if (!validationResult.success) {
+      console.error('Validation errors:', validationResult.error.errors)
       return NextResponse.json<ApiResponse>({
         success: false,
         message: 'Invalid input data',
-        error: validationResult.error.errors[0]?.message || 'Validation failed'
+        error: validationResult.error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ')
       }, { status: 400 })
     }
 
-    const clientData = validationResult.data
+    const clientData = validationResult.data as Omit<ClientFormData, 'id' | 'created_at' | 'updated_at'>
+    console.log('Validated client data:', clientData)
 
     let newClient
 
@@ -32,13 +35,14 @@ export async function POST(request: NextRequest) {
       console.log('Using demo storage for clients')
       
       try {
-        newClient = demoStorage.addClient(clientData)
+        newClient = demoStorage.addClient(clientData as any)
+        console.log('Client added successfully:', newClient)
       } catch (error) {
         console.error('Demo storage error:', error)
         return NextResponse.json<ApiResponse>({
           success: false,
           message: 'Failed to save client',
-          error: 'Storage error'
+          error: error instanceof Error ? error.message : 'Storage error'
         }, { status: 500 })
       }
     } else {

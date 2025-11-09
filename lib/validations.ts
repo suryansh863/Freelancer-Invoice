@@ -39,8 +39,14 @@ export const clientSchema = z.object({
   phone: z.string().max(20).optional().or(z.literal('')),
   company: z.string().max(255).optional().or(z.literal('')),
   address: z.string().optional().or(z.literal('')),
-  gstin: z.string().regex(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/, 'Invalid GSTIN format').optional().or(z.literal('')),
-  pan: z.string().regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid PAN format').optional().or(z.literal('')),
+  gstin: z.string().refine(
+    (val) => !val || val === '' || /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(val),
+    { message: 'Invalid GSTIN format' }
+  ).optional().or(z.literal('')),
+  pan: z.string().refine(
+    (val) => !val || val === '' || /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(val),
+    { message: 'Invalid PAN format' }
+  ).optional().or(z.literal('')),
   client_type: z.enum(['individual', 'company']).default('individual')
 })
 
@@ -74,12 +80,12 @@ export type InvoiceItemData = z.infer<typeof invoiceItemSchema>
 export interface Client {
   id: string
   name: string
-  email?: string
-  phone?: string
-  company?: string
-  address?: string
-  gstin?: string
-  pan?: string
+  email?: string | ''
+  phone?: string | ''
+  company?: string | ''
+  address?: string | ''
+  gstin?: string | ''
+  pan?: string | ''
   client_type: 'individual' | 'company'
   created_at: string
   updated_at: string

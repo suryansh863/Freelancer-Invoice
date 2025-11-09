@@ -66,26 +66,26 @@ export default function NewClientPage() {
       <div className="flex items-center space-x-4">
         <Link
           href="/dashboard/clients"
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
         >
-          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </Link>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Add New Client</h1>
-          <p className="text-gray-600">Create a new client profile</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Add New Client</h1>
+          <p className="text-gray-600 dark:text-gray-400">Create a new client profile</p>
         </div>
       </div>
 
       {/* Form */}
-      <div className="bg-white rounded-xl shadow-sm border">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg animate-shake">
               <div className="flex items-center">
-                <span className="text-red-500 mr-2">⚠️</span>
+                <span className="text-red-500 dark:text-red-400 mr-2">⚠️</span>
                 <span>{error}</span>
               </div>
             </div>
@@ -93,10 +93,10 @@ export default function NewClientPage() {
 
           {/* Basic Information */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Basic Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Full Name *
                 </label>
                 <input
@@ -106,13 +106,13 @@ export default function NewClientPage() {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter client's full name"
                 />
               </div>
 
               <div>
-                <label htmlFor="client_type" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="client_type" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Client Type *
                 </label>
                 <select
@@ -120,7 +120,7 @@ export default function NewClientPage() {
                   name="client_type"
                   value={formData.client_type}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="individual">Individual</option>
                   <option value="company">Company</option>
@@ -128,7 +128,7 @@ export default function NewClientPage() {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Email Address
                 </label>
                 <input
@@ -137,13 +137,13 @@ export default function NewClientPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="client@example.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Phone Number
                 </label>
                 <input
@@ -152,14 +152,14 @@ export default function NewClientPage() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="+91 98765 43210"
                 />
               </div>
 
               {formData.client_type === 'company' && (
                 <div className="md:col-span-2">
-                  <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="company" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Company Name
                   </label>
                   <input
@@ -168,7 +168,7 @@ export default function NewClientPage() {
                     name="company"
                     value={formData.company}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Company Name Pvt Ltd"
                   />
                 </div>
@@ -178,9 +178,9 @@ export default function NewClientPage() {
 
           {/* Address */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Address</h3>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Address</h3>
             <div>
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Full Address
               </label>
               <textarea
@@ -189,7 +189,7 @@ export default function NewClientPage() {
                 value={formData.address}
                 onChange={handleInputChange}
                 rows={3}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Enter complete address with city, state, and PIN code"
               />
             </div>
@@ -197,12 +197,12 @@ export default function NewClientPage() {
 
           {/* Tax Information */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Tax Information</h3>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Tax Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="gstin" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="gstin" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   GSTIN
-                  <span className="text-sm text-gray-500 ml-1">(15 digits)</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">(15 digits)</span>
                 </label>
                 <input
                   type="text"
@@ -211,18 +211,18 @@ export default function NewClientPage() {
                   value={formData.gstin}
                   onChange={handleInputChange}
                   maxLength={15}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="22AAAAA0000A1Z5"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                   Format: 22AAAAA0000A1Z5 (State Code + PAN + Entity Code + Check Digit)
                 </p>
               </div>
 
               <div>
-                <label htmlFor="pan" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="pan" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   PAN Number
-                  <span className="text-sm text-gray-500 ml-1">(10 characters)</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">(10 characters)</span>
                 </label>
                 <input
                   type="text"
@@ -231,10 +231,10 @@ export default function NewClientPage() {
                   value={formData.pan}
                   onChange={handleInputChange}
                   maxLength={10}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="AAAAA0000A"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                   Format: AAAAA0000A (5 letters + 4 digits + 1 letter)
                 </p>
               </div>
@@ -245,7 +245,7 @@ export default function NewClientPage() {
           <div className="flex justify-end space-x-4 pt-6 border-t">
             <Link
               href="/dashboard/clients"
-              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+              className="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               Cancel
             </Link>
