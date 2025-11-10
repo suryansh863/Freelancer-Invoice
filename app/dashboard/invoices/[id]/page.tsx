@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Invoice } from '@/lib/validations'
 import { formatCurrency, numberToWords, generateUPILink } from '@/lib/calculations'
+import PaymentButton from '@/app/components/PaymentButton'
 
 export default function InvoiceDetailPage() {
   const params = useParams()
@@ -329,27 +330,10 @@ export default function InvoiceDetailPage() {
         </div>
       </div>
 
-      {/* Payment Status Update (for demo) */}
-      {status !== 'paid' && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 print:hidden">
-          <div className="flex">
-            <svg className="w-5 h-5 text-yellow-600 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <div>
-              <h4 className="text-sm font-medium text-yellow-900 mb-1">Payment Pending</h4>
-              <p className="text-sm text-yellow-800">
-                This invoice is awaiting payment. 
-                {invoice.due_date && (
-                  <span>
-                    {' '}Due date: {new Date(invoice.due_date).toLocaleDateString()}
-                  </span>
-                )}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Payment Section */}
+      <div className="print:hidden">
+        <PaymentButton invoice={invoice} onPaymentSuccess={fetchInvoice} />
+      </div>
     </div>
   )
 }
