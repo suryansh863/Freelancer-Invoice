@@ -5,11 +5,13 @@ A modern, responsive landing page for an invoicing and payment tracking tool bui
 ## 🚀 Features
 
 - **India-Specific**: Built for Indian tax compliance (GST, TDS, Section 44ADA)
-- **UPI Integration**: Support for PhonePe, GPay, Paytm, and Razorpay
+- **Payment Integration**: Razorpay payment links with UPI, Cards, Net Banking
+- **UPI Direct Pay**: Direct UPI payment links (PhonePe, GPay, Paytm)
 - **Professional Invoicing**: GST-compliant invoice templates
 - **Automated Reminders**: Email and WhatsApp payment reminders
 - **Income Tracking**: Monthly summaries perfect for ITR filing
 - **Client Management**: Complete client database and project tracking
+- **Demo Mode**: Works without any configuration for testing
 
 ## 🛠 Tech Stack
 
@@ -23,6 +25,7 @@ A modern, responsive landing page for an invoicing and payment tracking tool bui
 ### Backend
 - **Next.js API Routes** - Serverless backend functions
 - **Supabase** - PostgreSQL database with real-time features
+- **Razorpay** - Payment gateway integration
 - **Zod** - Runtime type validation and parsing
 - **Resend** - Email delivery service
 - **File Storage Fallback** - Local development without external dependencies
@@ -53,7 +56,39 @@ npm run dev
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-> **Note:** The app works out of the box with file-based storage for development. For production, set up Supabase following the [SETUP.md](SETUP.md) guide.
+> **Note:** The app works out of the box in **DEMO MODE** with in-memory storage. No configuration needed for testing!
+
+## 💳 Payment Integration
+
+The app includes full Razorpay payment integration:
+
+- **Payment Links**: Generate secure payment links for invoices
+- **UPI Support**: Direct UPI payment with pre-filled details
+- **Multiple Methods**: Cards, UPI, Net Banking, Wallets
+- **Demo Mode**: Test without Razorpay API keys
+
+### Setup Razorpay (Optional)
+
+1. Sign up at [razorpay.com](https://razorpay.com)
+2. Get your API keys from the dashboard
+3. Add to `.env.local`:
+```env
+NEXT_PUBLIC_RAZORPAY_KEY_ID=rzp_test_xxxxxxxxxxxxx
+RAZORPAY_KEY_SECRET=your_secret_key
+```
+
+For detailed setup instructions, see [RAZORPAY_SETUP.md](RAZORPAY_SETUP.md)
+
+## 🗄️ Database Setup (Optional)
+
+For production use with persistent storage:
+
+1. Create a Supabase account at [supabase.com](https://supabase.com)
+2. Create a new project
+3. Run the SQL from `supabase/schema.sql`
+4. Add credentials to `.env.local`
+
+For detailed instructions, see [SETUP.md](SETUP.md)
 
 ## 🎯 Target Audience
 
@@ -75,11 +110,14 @@ Indian freelancers including:
 
 ## 🚀 Backend Features
 
+- **Payment Processing** - Razorpay integration with signature verification
+- **Payment Links** - Generate secure payment links for invoices
+- **UPI Integration** - Direct UPI payment support
 - **Secure Waitlist API** - Capture and store user signups
 - **Email Notifications** - Welcome emails with Resend integration
 - **Data Validation** - Server-side validation with Zod schemas
 - **Duplicate Prevention** - Prevent multiple signups with same email
-- **Flexible Storage** - Supabase for production, file storage for development
+- **Flexible Storage** - Supabase for production, in-memory for demo
 - **Type Safety** - Full TypeScript implementation
 - **Error Handling** - Comprehensive error handling and logging
 
