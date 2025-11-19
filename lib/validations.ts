@@ -60,7 +60,7 @@ export const invoiceItemSchema = z.object({
 
 // Invoice schema
 export const invoiceSchema = z.object({
-  client_id: z.string().uuid('Invalid client ID'),
+  client_id: z.string().min(1, 'Client is required'),
   invoice_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format'),
   due_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format').optional(),
   description: z.string().max(1000).optional().or(z.literal('')),

@@ -23,6 +23,7 @@ export default function NewInvoicePage() {
     notes: '',
     upi_id: ''
   })
+  const [tdsRateInput, setTdsRateInput] = useState<string>('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [totals, setTotals] = useState(calculateInvoiceTotals(formData.items, formData.tax_rate, formData.tds_rate))
@@ -357,8 +358,21 @@ export default function NewInvoicePage() {
                   type="number"
                   id="tds_rate"
                   name="tds_rate"
-                  value={formData.tds_rate}
-                  onChange={handleInputChange}
+                  value={tdsRateInput}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setTdsRateInput(value)
+                    setFormData(prev => ({
+                      ...prev,
+                      tds_rate: parseFloat(value) || 0
+                    }))
+                  }}
+                  onFocus={(e) => {
+                    if (e.target.value === '0') {
+                      setTdsRateInput('')
+                    }
+                  }}
+                  placeholder="0"
                   min="0"
                   max="30"
                   step="0.1"
