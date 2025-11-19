@@ -104,11 +104,11 @@ export default function PaymentButton({ invoice, onPaymentSuccess }: PaymentButt
         </h3>
         
         <div className="space-y-3">
-          {/* Razorpay Payment Link */}
+          {/* Razorpay Payment - All Methods */}
           <button
             onClick={createPaymentLink}
             disabled={isLoading}
-            className="w-full flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-medium hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
             {isLoading ? (
               <>
@@ -123,23 +123,26 @@ export default function PaymentButton({ invoice, onPaymentSuccess }: PaymentButt
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
-                Pay with Razorpay (Card/UPI/Netbanking)
+                Pay with Razorpay
               </>
             )}
           </button>
 
-          {/* Direct UPI Payment */}
-          {invoice.upi_id && (
-            <button
-              onClick={generateUpiLink}
-              className="w-full flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors"
-            >
-              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-              </svg>
-              Pay via UPI ({invoice.upi_id})
-            </button>
-          )}
+          {/* Payment Methods Info */}
+          <div className="flex flex-wrap gap-2 justify-center">
+            <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
+              💳 Cards
+            </span>
+            <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300">
+              📱 UPI
+            </span>
+            <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300">
+              🏦 Net Banking
+            </span>
+            <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300">
+              💰 Wallets
+            </span>
+          </div>
 
           {paymentLink && (
             <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">

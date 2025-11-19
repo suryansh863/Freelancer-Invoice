@@ -183,3 +183,32 @@ $$ LANGUAGE plpgsql;
 COMMENT ON TABLE public.clients IS 'Client information for invoice generation';
 COMMENT ON TABLE public.invoices IS 'Invoice records with GST and TDS calculations';
 COMMENT ON TABLE public.invoice_items IS 'Line items for each invoice';
+-- U
+sers table for authentication
+CREATE TABLE IF NOT EXISTS public.users (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  full_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  business_name VARCHAR(255),
+  gstin VARCHAR(15),
+  pan VARCHAR(10) NOT NULL,
+  address TEXT NOT NULL,
+  password_hash TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create index on email for faster lookups
+CREATE INDEX IF NOT EXISTS idx_users_email ON public.users(email);
+
+-- Enable Row Level Security (RLS)
+ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
+
+-- Create policy to allow users to read their own data
+CREATE POLICY "Users can read own data" ON public.users
+  FOR SELECT USING (auth.uid() = id);
+
+-- Create policy to allow users to update their own data
+CREATE POLICY "Users can update own data" ON public.users
+  FOR UPDATE USING (auth.uid() = id);
