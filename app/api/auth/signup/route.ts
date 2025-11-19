@@ -39,12 +39,22 @@ export async function POST(request: NextRequest) {
 
     // Validate GSTIN if provided
     if (gstin) {
-      const gstinRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/
-      if (!gstinRegex.test(gstin)) {
+      // Check if GSTIN is exactly 15 characters and alphanumeric
+      if (gstin.length !== 15) {
         return NextResponse.json<ApiResponse>({
           success: false,
           message: 'Invalid GSTIN format',
-          error: 'GSTIN should be 15 characters'
+          error: 'GSTIN should be exactly 15 characters'
+        }, { status: 400 })
+      }
+      
+      // Optional: More strict validation (can be commented out if too strict)
+      const gstinRegex = /^[0-9]{2}[A-Z0-9]{13}$/
+      if (!gstinRegex.test(gstin.toUpperCase())) {
+        return NextResponse.json<ApiResponse>({
+          success: false,
+          message: 'Invalid GSTIN format',
+          error: 'GSTIN should start with 2 digits followed by 13 alphanumeric characters'
         }, { status: 400 })
       }
     }

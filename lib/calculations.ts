@@ -188,8 +188,11 @@ export function generateUPILink(
 
 // Validate GSTIN format
 export function validateGSTIN(gstin: string): boolean {
-  const gstinRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/
-  return gstinRegex.test(gstin)
+  // GSTIN should be exactly 15 characters
+  // Format: 2 digits (state code) + 13 alphanumeric characters
+  if (gstin.length !== 15) return false
+  const gstinRegex = /^[0-9]{2}[A-Z0-9]{13}$/
+  return gstinRegex.test(gstin.toUpperCase())
 }
 
 // Validate PAN format
