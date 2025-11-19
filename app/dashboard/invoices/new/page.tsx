@@ -267,8 +267,12 @@ export default function NewInvoicePage() {
                   </label>
                   <input
                     type="number"
-                    value={item.quantity}
-                    onChange={(e) => handleItemChange(index, 'quantity', parseFloat(e.target.value) || 0)}
+                    value={item.quantity || ''}
+                    onChange={(e) => {
+                      const val = e.target.value
+                      handleItemChange(index, 'quantity', val === '' ? 0 : parseFloat(val))
+                    }}
+                    placeholder="1"
                     min="0.01"
                     step="0.01"
                     required
@@ -282,8 +286,12 @@ export default function NewInvoicePage() {
                   </label>
                   <input
                     type="number"
-                    value={item.rate}
-                    onChange={(e) => handleItemChange(index, 'rate', parseFloat(e.target.value) || 0)}
+                    value={item.rate || ''}
+                    onChange={(e) => {
+                      const val = e.target.value
+                      handleItemChange(index, 'rate', val === '' ? 0 : parseFloat(val))
+                    }}
+                    placeholder="Enter rate"
                     min="0"
                     step="0.01"
                     required
