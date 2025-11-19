@@ -5,8 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export default function DemoPaymentPage() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
+    const router = useRouter()
   const [processing, setProcessing] = useState(false)
 
   const invoiceId = searchParams.get('invoice')

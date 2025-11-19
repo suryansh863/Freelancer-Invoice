@@ -67,3 +67,59 @@ export async function GET(
     }, { status: 500 })
   }
 }
+
+/
+**
+ * PUT /api/invoices/[id]
+ * Update an existing invoice
+ */
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const invoiceId = params.id
+    const body = await request.json()
+    
+    // For demo mode, just return success
+    if (shouldUseFallback()) {
+      return NextResponse.json<ApiResponse>({
+        success: true,
+        message: 'Invoice updated successfully (demo mode)',
+        data: { id: invoiceId, ...body }
+      })
+    }
+
+    // Update in Supabase
+    const { data, error } = await supabaseAdmin
+      .from('invoices')
+      .update(body)
+      .eq('id', invoiceId)
+      .select()
+      .single()
+
+    if (error) {
+      console.error('Database update error:', error)
+      return NextResponse.json<ApiResponse>({
+        success: false,
+        message: 'Failed to update invoice',
+        error: 'Database update failed'
+      }, { status: 500 })
+    }
+
+    return NextResponse.json<ApiResponse>({
+      success: true,
+      message: 'Invoice updated successfully',
+      data: data
+    })
+
+  } catch (error) {
+    console.error('Invoice update error:', error)
+    
+    return NextResponse.json<ApiResponse>({
+      success: false,
+      message: 'Failed to update invoice',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 })
+  }
+}
