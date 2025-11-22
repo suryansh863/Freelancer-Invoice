@@ -32,12 +32,41 @@ const FreelanceInvoiceTracker: React.FC = () => {
   })
 
   const [scrollY, setScrollY] = useState(0)
+  const [user, setUser] = useState<any>(null)
+  const [showProfileMenu, setShowProfileMenu] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    // Check if user is logged in
+    const userStr = localStorage.getItem('user')
+    if (userStr) {
+      setUser(JSON.parse(userStr))
+    }
+  }, [])
+
+  useEffect(() => {
+    // Close dropdown when clicking outside
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement
+      if (showProfileMenu && !target.closest('.profile-dropdown')) {
+        setShowProfileMenu(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [showProfileMenu])
+
+  const handleLogout = () => {
+    localStorage.removeItem('user')
+    setUser(null)
+    setShowProfileMenu(false)
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -176,24 +205,87 @@ const FreelanceInvoiceTracker: React.FC = () => {
             </div>
             <div className="flex items-center space-x-3">
               <Link
-                href="/auth/login"
-                className="hidden sm:flex items-center space-x-2 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/auth/signup"
-                className="hidden sm:flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white px-5 py-2.5 rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all"
-              >
-                Sign Up
-              </Link>
-              <Link
                 href="/dashboard"
                 className="bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 text-white px-5 py-2.5 rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all"
               >
                 <span className="hidden sm:inline">🚀 Try Demo</span>
                 <span className="sm:hidden">Demo</span>
               </Link>
+              
+              {/* Profile Dropdown */}
+              <div className="relative profile-dropdown">
+                <button
+                  onClick={() => setShowProfileMenu(!showProfileMenu)}
+                  className="flex items-center space-x-2 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  <span className="hidden sm:inline">{user ? user.full_name || 'Profile' : 'Account'}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Dropdown Menu */}
+                {showProfileMenu && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+                    {user ? (
+                      <>
+                        <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                          <p className="text-sm font-medium text-gray-900 dark:text-white">{user.full_name || 'User'}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+                        </div>
+                        <Link
+                          href="/dashboard"
+                          className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          onClick={() => setShowProfileMenu(false)}
+                        >
+                          Dashboard
+                        </Link>
+                        <Link
+                          href="/dashboard/profile"
+                          className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          onClick={() => setShowProfileMenu(false)}
+                        >
+                          My Profile
+                        </Link>
+                        <button
+                          onClick={handleLogout}
+                          className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        >
+                          Sign Out
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          href="/auth/login"
+                          className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          onClick={() => setShowProfileMenu(false)}
+                        >
+                          Sign In
+                        </Link>
+                        <Link
+                          href="/auth/signup"
+                          className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          onClick={() => setShowProfileMenu(false)}
+                        >
+                          Sign Up
+                        </Link>
+                        <Link
+                          href="/dashboard"
+                          className="block px-4 py-2 text-sm text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          onClick={() => setShowProfileMenu(false)}
+                        >
+                          Try Demo
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+              
               <ThemeToggle />
             </div>
           </div>
