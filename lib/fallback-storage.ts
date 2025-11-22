@@ -87,6 +87,13 @@ function generateId(): string {
 }
 
 // Check if we should use fallback storage
+// In production, this should always return false
 export function shouldUseFallback(): boolean {
-  return !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY
+  const useFallback = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY
+  
+  if (useFallback && process.env.NODE_ENV === 'production') {
+    console.error('WARNING: Supabase not configured in production! Please set environment variables.')
+  }
+  
+  return useFallback
 }

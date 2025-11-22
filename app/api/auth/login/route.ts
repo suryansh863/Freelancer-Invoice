@@ -18,17 +18,11 @@ export async function POST(request: NextRequest) {
 
     // Check if Supabase is configured
     if (!supabaseAdmin) {
-      // Demo mode - allow any login
       return NextResponse.json<ApiResponse>({
-        success: true,
-        message: 'Demo login successful',
-        data: {
-          id: 'demo-user',
-          email: email,
-          fullName: 'Demo User',
-          isDemoMode: true
-        }
-      })
+        success: false,
+        message: 'Database not configured',
+        error: 'Please configure Supabase to use this feature'
+      }, { status: 503 })
     }
 
     // Query user from database

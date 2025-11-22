@@ -142,18 +142,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Demo Access */}
-          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-            <button
-              onClick={() => router.push('/dashboard')}
-              className="w-full px-6 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            >
-              Continue as Demo User
-            </button>
-            <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-2">
-              Try the app without creating an account
-            </p>
-          </div>
+
         </div>
 
         {/* Back to Home */}

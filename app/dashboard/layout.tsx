@@ -3,6 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import ThemeToggle from '@/app/components/ThemeToggle'
+import AuthCheck from './auth-check'
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -10,6 +11,7 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
+    <AuthCheck>
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
         {/* Navigation */}
         <nav className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
@@ -78,5 +80,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         {children}
       </main>
     </div>
+    </AuthCheck>
   )
 }

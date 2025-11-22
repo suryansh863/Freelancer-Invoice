@@ -205,11 +205,16 @@ const FreelanceInvoiceTracker: React.FC = () => {
             </div>
             <div className="flex items-center space-x-3">
               <Link
-                href="/dashboard"
-                className="bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 text-white px-5 py-2.5 rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all"
+                href="/auth/login"
+                className="hidden sm:flex text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
               >
-                <span className="hidden sm:inline">🚀 Try Demo</span>
-                <span className="sm:hidden">Demo</span>
+                Sign In
+              </Link>
+              <Link
+                href="/auth/signup"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white px-5 py-2.5 rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all"
+              >
+                Get Started
               </Link>
               
               {/* Profile Dropdown */}
@@ -273,13 +278,7 @@ const FreelanceInvoiceTracker: React.FC = () => {
                         >
                           Sign Up
                         </Link>
-                        <Link
-                          href="/dashboard"
-                          className="block px-4 py-2 text-sm text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          onClick={() => setShowProfileMenu(false)}
-                        >
-                          Try Demo
-                        </Link>
+
                       </>
                     )}
                   </div>
@@ -323,23 +322,23 @@ const FreelanceInvoiceTracker: React.FC = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up animation-delay-600">
               <Link
-                href="/dashboard"
+                href="/auth/signup"
                 className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white rounded-2xl font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all overflow-hidden"
               >
                 <span className="relative z-10 flex items-center space-x-2">
-                  <span>Try Free Demo</span>
+                  <span>Get Started Free</span>
                   <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </Link>
-              <button
-                onClick={() => document.getElementById('waitlist-form')?.scrollIntoView({ behavior: 'smooth' })}
+              <Link
+                href="/auth/login"
                 className="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-gray-700 rounded-2xl font-semibold text-lg hover:border-purple-500 dark:hover:border-purple-500 hover:shadow-xl hover:scale-105 transition-all"
               >
-                Join Waitlist
-              </button>
+                Sign In
+              </Link>
             </div>
 
             {/* Stats */}

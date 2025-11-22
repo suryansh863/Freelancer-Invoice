@@ -61,23 +61,11 @@ export async function POST(request: NextRequest) {
 
     // Check if Supabase is configured
     if (!supabaseAdmin) {
-      // Demo mode - create demo user
       return NextResponse.json<ApiResponse>({
-        success: true,
-        message: 'Demo account created successfully',
-        data: {
-          id: `demo-${Date.now()}`,
-          email: email,
-          fullName: fullName,
-          phone: phone,
-          businessName: businessName || '',
-          gstin: gstin || '',
-          pan: pan,
-          address: address,
-          isDemoMode: true,
-          created_at: new Date().toISOString()
-        }
-      })
+        success: false,
+        message: 'Database not configured',
+        error: 'Please configure Supabase to use this feature'
+      }, { status: 503 })
     }
 
     // Check if user already exists
