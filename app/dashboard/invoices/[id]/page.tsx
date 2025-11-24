@@ -112,14 +112,14 @@ export default function InvoiceDetailPage() {
         <div className="flex items-center space-x-4">
           <Link
             href="/dashboard/invoices"
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors print:hidden"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors print:hidden"
           >
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{invoice.invoice_number}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{invoice.invoice_number}</h1>
             <div className="flex items-center space-x-4 mt-1">
               <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(status)}`}>
                 {status}
@@ -135,14 +135,14 @@ export default function InvoiceDetailPage() {
           {status !== 'paid' && (
             <Link
               href={`/dashboard/invoices/${invoice.id}/edit`}
-              className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+              className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               Edit
             </Link>
           )}
           <button
             onClick={handlePrint}
-            className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+            className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           >
             Print
           </button>

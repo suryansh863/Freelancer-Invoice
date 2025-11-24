@@ -55,6 +55,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   Clients
                 </Link>
                 <Link 
+                  href="/pricing" 
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  Pricing
+                </Link>
+                <Link 
                   href="/dashboard/profile" 
                   className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-100 dark:hover:bg-gray-700"
                   title="My Profile"

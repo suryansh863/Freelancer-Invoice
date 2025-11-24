@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS public.invoice_items (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Create indexes for better performance
+-- Create indexes
 CREATE INDEX IF NOT EXISTS idx_waitlist_email ON public.waitlist(email);
 CREATE INDEX IF NOT EXISTS idx_waitlist_created_at ON public.waitlist(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_users_email ON public.users(email);
@@ -122,7 +122,7 @@ CREATE INDEX IF NOT EXISTS idx_invoices_date ON public.invoices(invoice_date DES
 CREATE INDEX IF NOT EXISTS idx_invoices_number ON public.invoices(invoice_number);
 CREATE INDEX IF NOT EXISTS idx_invoice_items_invoice_id ON public.invoice_items(invoice_id);
 
--- Enable Row Level Security (RLS)
+-- Enable RLS
 ALTER TABLE public.waitlist ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.password_reset_tokens ENABLE ROW LEVEL SECURITY;
@@ -130,55 +130,37 @@ ALTER TABLE public.clients ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.invoices ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.invoice_items ENABLE ROW LEVEL SECURITY;
 
--- Create policies for waitlist
-CREATE POLICY "Allow public inserts on waitlist" ON public.waitlist
-    FOR INSERT WITH CHECK (true);
+-- Drop existing policies
+DROP POLICY IF EXISTS "Allow public inserts on waitlist" ON public.waitlist;
+DROP POLICY IF EXISTS "Allow service role full access on waitlist" ON public.waitlist;
+DROP POLICY IF EXISTS "Allow service role full access on users" ON public.users;
+DROP POLICY IF EXISTS "Allow service role full access on password_reset_tokens" ON public.password_reset_tokens;
+DROP POLICY IF EXISTS "Allow all operations on clients" ON public.clients;
+DROP POLICY IF EXISTS "Allow all operations on invoices" ON public.invoices;
+DROP POLICY IF EXISTS "Allow all operations on invoice_items" ON public.invoice_items;
 
-CREATE POLICY "Allow service role full access on waitlist" ON public.waitlist
-    FOR ALL USING (auth.role() = 'service_role');
+-- Create policies
+CREATE POLICY "Allow public inserts on waitlist" ON public.waitlist FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow service role full access on waitlist" ON public.waitlist FOR ALL USING (auth.role() = 'service_role');
+CREATE POLICY "Allow service role full access on users" ON public.users FOR ALL USING (true);
+CREATE POLICY "Allow service role full access on password_reset_tokens" ON public.password_reset_tokens FOR ALL USING (true);
+CREATE POLICY "Allow all operations on clients" ON public.clients FOR ALL USING (true);
+CREATE POLICY "Allow all operations on invoices" ON public.invoices FOR ALL USING (true);
+CREATE POLICY "Allow all operations on invoice_items" ON public.invoice_items FOR ALL USING (true);
 
--- Create policies for users (allow service role full access for now)
-CREATE POLICY "Allow service role full access on users" ON public.users
-    FOR ALL USING (true);
+-- Drop existing triggers
+DROP TRIGGER IF EXISTS handle_waitlist_updated_at ON public.waitlist;
+DROP TRIGGER IF EXISTS handle_users_updated_at ON public.users;
+DROP TRIGGER IF EXISTS handle_clients_updated_at ON public.clients;
+DROP TRIGGER IF EXISTS handle_invoices_updated_at ON public.invoices;
 
--- Create policies for password reset tokens
-CREATE POLICY "Allow service role full access on password_reset_tokens" ON public.password_reset_tokens
-    FOR ALL USING (true);
+-- Create triggers
+CREATE TRIGGER handle_waitlist_updated_at BEFORE UPDATE ON public.waitlist FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
+CREATE TRIGGER handle_users_updated_at BEFORE UPDATE ON public.users FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
+CREATE TRIGGER handle_clients_updated_at BEFORE UPDATE ON public.clients FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
+CREATE TRIGGER handle_invoices_updated_at BEFORE UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
 
--- Create policies for clients
-CREATE POLICY "Allow all operations on clients" ON public.clients 
-    FOR ALL USING (true);
-
--- Create policies for invoices
-CREATE POLICY "Allow all operations on invoices" ON public.invoices 
-    FOR ALL USING (true);
-
--- Create policies for invoice items
-CREATE POLICY "Allow all operations on invoice_items" ON public.invoice_items 
-    FOR ALL USING (true);
-
--- Create triggers for updated_at
-CREATE TRIGGER handle_waitlist_updated_at
-    BEFORE UPDATE ON public.waitlist
-    FOR EACH ROW
-    EXECUTE FUNCTION public.handle_updated_at();
-
-CREATE TRIGGER handle_users_updated_at
-    BEFORE UPDATE ON public.users
-    FOR EACH ROW
-    EXECUTE FUNCTION public.handle_updated_at();
-
-CREATE TRIGGER handle_clients_updated_at
-    BEFORE UPDATE ON public.clients
-    FOR EACH ROW
-    EXECUTE FUNCTION public.handle_updated_at();
-
-CREATE TRIGGER handle_invoices_updated_at
-    BEFORE UPDATE ON public.invoices
-    FOR EACH ROW
-    EXECUTE FUNCTION public.handle_updated_at();
-
--- Create function to generate invoice numbers
+-- Create invoice number generator
 CREATE OR REPLACE FUNCTION public.generate_invoice_number()
 RETURNS TEXT AS $$
 DECLARE

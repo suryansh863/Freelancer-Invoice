@@ -13,6 +13,113 @@ body {
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
+/* Dark mode color fixes */
+.dark {
+  color-scheme: dark;
+}
+
+/* Ensure text is visible in dark mode */
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  @apply text-white;
+}
+
+.dark p, .dark span, .dark div {
+  @apply text-gray-200;
+}
+
+.dark label {
+  @apply text-gray-300;
+}
+
+/* Fix white backgrounds in dark mode */
+.dark .bg-white {
+  @apply bg-gray-800 border-gray-700;
+}
+
+/* Fix gray backgrounds to be darker */
+.dark .bg-gray-50 {
+  @apply bg-gray-900;
+}
+
+.dark .bg-gray-100 {
+  @apply bg-gray-800;
+}
+
+.dark .bg-gray-200 {
+  @apply bg-gray-700;
+}
+
+/* Fix text colors */
+.dark .text-gray-900 {
+  @apply text-white;
+}
+
+.dark .text-gray-800 {
+  @apply text-gray-100;
+}
+
+.dark .text-gray-700 {
+  @apply text-gray-200;
+}
+
+.dark .text-gray-600 {
+  @apply text-gray-300;
+}
+
+.dark .text-gray-500 {
+  @apply text-gray-400;
+}
+
+/* Fix borders */
+.dark .border-gray-200 {
+  @apply border-gray-700;
+}
+
+.dark .border-gray-300 {
+  @apply border-gray-600;
+}
+
+/* Fix hover states */
+.dark .hover\:bg-gray-50:hover {
+  @apply bg-gray-700;
+}
+
+.dark .hover\:bg-gray-100:hover {
+  @apply bg-gray-700;
+}
+
+/* Fix input fields */
+.dark input, .dark textarea, .dark select {
+  @apply bg-gray-700 border-gray-600 text-white placeholder-gray-400;
+}
+
+.dark input:focus, .dark textarea:focus, .dark select:focus {
+  @apply border-blue-500 ring-blue-500;
+}
+
+/* Fix buttons */
+.dark button:not(.bg-blue-600):not(.bg-green-600):not(.bg-red-600):not(.bg-gradient-to-r) {
+  @apply text-gray-200;
+}
+
+/* Fix tables */
+.dark table {
+  @apply border-gray-700;
+}
+
+.dark th {
+  @apply bg-gray-800 text-white border-gray-700;
+}
+
+.dark td {
+  @apply border-gray-700 text-gray-200;
+}
+
+/* Fix cards and panels */
+.dark .shadow-sm, .dark .shadow, .dark .shadow-lg, .dark .shadow-xl, .dark .shadow-2xl {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
 /* Smooth transitions for dark mode */
 * {
   transition-property: background-color, border-color, color, fill, stroke;

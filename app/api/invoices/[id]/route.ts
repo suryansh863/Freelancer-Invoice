@@ -68,8 +68,7 @@ export async function GET(
   }
 }
 
-/
-**
+/**
  * PUT /api/invoices/[id]
  * Update an existing invoice
  */

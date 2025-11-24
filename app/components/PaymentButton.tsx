@@ -14,6 +14,11 @@ export default function PaymentButton({ invoice, onPaymentSuccess }: PaymentButt
   const [paymentLink, setPaymentLink] = useState<string | null>(null)
 
   const createPaymentLink = async () => {
+    // Show coming soon message
+    alert('🚀 Payment Integration Coming Soon!\n\nOnline payment processing will be available soon. For now, you can:\n\n• Share invoice with clients\n• Accept payments via UPI/Bank Transfer\n• Mark invoices as paid manually')
+    return
+    
+    /* Payment integration code - will be enabled soon
     setIsLoading(true)
     setError(null)
 
@@ -25,7 +30,7 @@ export default function PaymentButton({ invoice, onPaymentSuccess }: PaymentButt
         },
         body: JSON.stringify({
           invoiceId: invoice.id,
-          amount: Math.round(invoice.total_amount * 100), // Convert to paise
+          amount: Math.round(invoice.total_amount * 100),
           currency: 'INR',
           description: `Payment for Invoice ${invoice.invoice_number}`,
           customer: {
@@ -41,11 +46,8 @@ export default function PaymentButton({ invoice, onPaymentSuccess }: PaymentButt
 
       if (result.success && result.data) {
         setPaymentLink(result.data.short_url)
-        
-        // Open payment link in new tab
         window.open(result.data.short_url, '_blank')
         
-        // If demo mode, show message
         if (result.data.isDemoMode) {
           alert('Demo Mode: Razorpay is not configured. This is a demo payment link.')
         }
@@ -58,6 +60,7 @@ export default function PaymentButton({ invoice, onPaymentSuccess }: PaymentButt
     } finally {
       setIsLoading(false)
     }
+    */
   }
 
   const generateUpiLink = () => {

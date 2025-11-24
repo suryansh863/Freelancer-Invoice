@@ -56,19 +56,39 @@ export async function POST(request: NextRequest) {
       // Use Supabase for production
       
       // Generate invoice number
-      const { data: invoiceNumberData } = await supabaseAdmin
-        .rpc('generate_invoice_number')
+      let invoiceNumber = `INV-${Date.now()}`
+      
+      try {
+        const { data: invoiceNumberData, error: rpcError } = await supabaseAdmin
+          .rpc('generate_invoice_number')
+        
+        if (rpcError) {
+          console.warn('RPC function error, using fallback:', rpcError)
+        } else if (invoiceNumberData) {
+          invoiceNumber = invoiceNumberData
+        }
+      } catch (error) {
+        console.warn('Failed to generate invoice number, using fallback:', error)
+      }
 
-      const invoiceNumber = invoiceNumberData || `INV-${Date.now()}`
-
-      // Create invoice
+      // Create invoice - convert camelCase to snake_case for database
       const invoiceToInsert = {
         invoice_number: invoiceNumber,
         client_id,
         ...invoiceData,
         status: 'draft',
         amount: totals.subtotal,
-        ...totals,
+        tax_rate: totals.taxRate,
+        tax_amount: totals.taxAmount,
+        cgst_rate: totals.cgstRate,
+        cgst_amount: totals.cgstAmount,
+        sgst_rate: totals.sgstRate,
+        sgst_amount: totals.sgstAmount,
+        igst_rate: totals.igstRate,
+        igst_amount: totals.igstAmount,
+        tds_rate: totals.tdsRate,
+        tds_amount: totals.tdsAmount,
+        total_amount: totals.totalAmount,
         payment_status: 'pending',
         paid_amount: 0
       }

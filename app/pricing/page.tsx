@@ -1,10 +1,19 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function PricingPage() {
+  const router = useRouter()
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly')
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    // Check if user is logged in
+    const user = localStorage.getItem('user')
+    setIsLoggedIn(!!user)
+  }, [])
 
   const plans = [
     {
@@ -17,7 +26,6 @@ export default function PricingPage() {
         'GST & TDS calculation',
         'Basic invoice templates',
         'Email support',
-        'Mobile app access',
       ],
       limitations: [
         'No payment integration',
@@ -37,8 +45,6 @@ export default function PricingPage() {
         'Unlimited clients',
         'GST & TDS calculation',
         'Professional templates',
-        'Razorpay payment integration',
-        'UPI payment links',
         'Advanced reporting',
         'Priority email support',
         'No watermarks',
@@ -62,10 +68,8 @@ export default function PricingPage() {
         'Advanced analytics',
         'API access',
         'Custom integrations',
-        'Dedicated account manager',
         '24/7 phone support',
         'White-label option',
-        'Custom domain',
         'Bulk operations',
         'Export to Tally/QuickBooks',
       ],
@@ -236,12 +240,28 @@ export default function PricingPage() {
                   )}
                 </div>
 
-                <Link
-                  href={plan.name === 'Free' ? '/auth/signup' : '/auth/signup'}
-                  className={`block w-full py-3 px-6 rounded-lg font-semibold text-center ${colors.button} transition-all mb-6`}
-                >
-                  {plan.cta}
-                </Link>
+                {plan.name === 'Free' ? (
+                  <Link
+                    href={isLoggedIn ? '/dashboard' : '/auth/signup'}
+                    className={`block w-full py-3 px-6 rounded-lg font-semibold text-center ${colors.button} transition-all mb-6`}
+                  >
+                    {isLoggedIn ? 'Current Plan' : plan.cta}
+                  </Link>
+                ) : isLoggedIn ? (
+                  <button
+                    onClick={() => alert(`Upgrade to ${plan.name} - Payment integration coming soon!`)}
+                    className={`block w-full py-3 px-6 rounded-lg font-semibold text-center ${colors.button} transition-all mb-6`}
+                  >
+                    Buy Now - ₹{price}
+                  </button>
+                ) : (
+                  <Link
+                    href="/auth/signup"
+                    className={`block w-full py-3 px-6 rounded-lg font-semibold text-center ${colors.button} transition-all mb-6`}
+                  >
+                    {plan.cta}
+                  </Link>
+                )}
 
                 <div className="space-y-3 mb-6">
                   {plan.features.map((feature, index) => (
@@ -378,18 +398,29 @@ export default function PricingPage() {
             Join thousands of freelancers managing their invoices professionally
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/auth/signup"
-              className="px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all"
-            >
-              Start Free Trial
-            </Link>
-            <Link
-              href="/auth/login"
-              className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all"
-            >
-              Sign In
-            </Link>
+            {isLoggedIn ? (
+              <Link
+                href="/dashboard"
+                className="px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all"
+              >
+                Go to Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/auth/signup"
+                  className="px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all"
+                >
+                  Start Free Trial
+                </Link>
+                <Link
+                  href="/auth/login"
+                  className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all"
+                >
+                  Sign In
+                </Link>
+              </>
+            )}
           </div>
         </div>
 

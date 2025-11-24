@@ -147,9 +147,17 @@ export default function TermsOfServicePage() {
 
           <section>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">14. Contact Information</h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              If you have any questions about these Terms of Service, please contact us through the contact information provided on our website.
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+              If you have any questions about these Terms of Service, please contact us:
             </p>
+            <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <p className="text-gray-700 dark:text-gray-300">
+                <strong>Name:</strong> Suryansh Singh<br />
+                <strong>Email:</strong> suryanshsingh5654@gmail.com<br />
+                <strong>Location:</strong> Delhi, India<br />
+                <strong>Support:</strong> We aim to respond within 48 hours
+              </p>
+            </div>
           </section>
 
           <section className="pt-6 border-t border-gray-200 dark:border-gray-700">

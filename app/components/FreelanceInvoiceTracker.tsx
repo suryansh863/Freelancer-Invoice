@@ -176,12 +176,7 @@ const FreelanceInvoiceTracker: React.FC = () => {
     }
   ]
 
-  const stats = [
-    { value: '500+', label: 'Freelancers' },
-    { value: '₹10L+', label: 'Invoiced' },
-    { value: '99.9%', label: 'Uptime' },
-    { value: '24/7', label: 'Support' }
-  ]
+  const stats: { value: string; label: string }[] = []
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 overflow-hidden">
@@ -204,18 +199,22 @@ const FreelanceInvoiceTracker: React.FC = () => {
               </span>
             </div>
             <div className="flex items-center space-x-3">
-              <Link
-                href="/auth/login"
-                className="hidden sm:flex text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/auth/signup"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white px-5 py-2.5 rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all"
-              >
-                Get Started
-              </Link>
+              {!user && (
+                <>
+                  <Link
+                    href="/auth/login"
+                    className="hidden sm:flex text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/auth/signup"
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white px-5 py-2.5 rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all"
+                  >
+                    Get Started
+                  </Link>
+                </>
+              )}
               
               {/* Profile Dropdown */}
               <div className="relative profile-dropdown">
@@ -321,37 +320,44 @@ const FreelanceInvoiceTracker: React.FC = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up animation-delay-600">
-              <Link
-                href="/auth/signup"
-                className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white rounded-2xl font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all overflow-hidden"
-              >
-                <span className="relative z-10 flex items-center space-x-2">
-                  <span>Get Started Free</span>
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              </Link>
-              <Link
-                href="/auth/login"
-                className="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-gray-700 rounded-2xl font-semibold text-lg hover:border-purple-500 dark:hover:border-purple-500 hover:shadow-xl hover:scale-105 transition-all"
-              >
-                Sign In
-              </Link>
+              {user ? (
+                <Link
+                  href="/dashboard"
+                  className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white rounded-2xl font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all overflow-hidden"
+                >
+                  <span className="relative z-10 flex items-center space-x-2">
+                    <span>Go to Dashboard</span>
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/auth/signup"
+                    className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white rounded-2xl font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all overflow-hidden"
+                  >
+                    <span className="relative z-10 flex items-center space-x-2">
+                      <span>Get Started Free</span>
+                      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  </Link>
+                  <Link
+                    href="/auth/login"
+                    className="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-gray-700 rounded-2xl font-semibold text-lg hover:border-purple-500 dark:hover:border-purple-500 hover:shadow-xl hover:scale-105 transition-all"
+                  >
+                    Sign In
+                  </Link>
+                </>
+              )}
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 pt-12 animate-slide-up animation-delay-800">
-              {stats.map((stat, index) => (
-                <div key={index} className="group">
-                  <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+            {/* Stats - Removed fake data */}
           </div>
         </div>
 
@@ -401,37 +407,7 @@ const FreelanceInvoiceTracker: React.FC = () => {
         </div>
       </section>
 
-      {/* Social Proof Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 p-1 rounded-3xl">
-            <div className="bg-white dark:bg-gray-900 rounded-3xl p-12 text-center">
-              <div className="flex justify-center mb-6">
-                <div className="flex -space-x-4">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <div key={i} className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-600 border-4 border-white dark:border-gray-900 flex items-center justify-center text-white font-bold">
-                      {String.fromCharCode(64 + i)}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                Join 500+ Happy Freelancers
-              </h3>
-              <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-                "This tool saved me hours every week. The automatic TDS calculation alone is worth it!"
-              </p>
-              <div className="flex justify-center space-x-1">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <svg key={i} className="w-8 h-8 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                  </svg>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Waitlist Form Section */}
       <section id="waitlist-form" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">

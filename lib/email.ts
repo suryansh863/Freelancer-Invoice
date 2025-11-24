@@ -40,6 +40,96 @@ export async function sendWelcomeEmail({ name, email, profession }: SendWelcomeE
   }
 }
 
+interface SendPasswordResetEmailParams {
+  name: string
+  email: string
+  resetToken: string
+}
+
+/**
+ * Send password reset email
+ */
+export async function sendPasswordResetEmail({ name, email, resetToken }: SendPasswordResetEmailParams) {
+  // Skip email sending if Resend is not configured
+  if (!resend || !process.env.FROM_EMAIL) {
+    console.log('Email service not configured, skipping password reset email')
+    return { success: true, message: 'Email service not configured' }
+  }
+
+  const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/reset-password?token=${resetToken}`
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: process.env.FROM_EMAIL!,
+      to: [email],
+      subject: 'Reset Your Password - Invoice Tracker',
+      html: generatePasswordResetEmailHTML({ name, resetUrl })
+    })
+
+    if (error) {
+      console.error('Failed to send password reset email:', error)
+      return { success: false, error: error.message }
+    }
+
+    console.log('Password reset email sent successfully:', data?.id)
+    return { success: true, data }
+  } catch (error) {
+    console.error('Email service error:', error)
+    return { success: false, error: 'Failed to send password reset email' }
+  }
+}
+
+/**
+ * Generate HTML content for password reset email
+ */
+function generatePasswordResetEmailHTML({ name, resetUrl }: { name: string; resetUrl: string }) {
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Reset Your Password</title>
+    </head>
+    <body style="font-family: 'Inter', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="color: #2563eb; font-size: 28px; margin-bottom: 10px;">💰 Invoice Tracker</h1>
+        <p style="color: #64748b; font-size: 16px;">Password Reset Request</p>
+      </div>
+      
+      <div style="background: #f8fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+        <h2 style="color: #1e293b; margin-bottom: 15px;">Hi ${name},</h2>
+        <p style="margin-bottom: 15px;">We received a request to reset your password. Click the button below to create a new password:</p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${resetUrl}" style="display: inline-block; background: linear-gradient(to right, #2563eb, #4f46e5); color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
+            Reset Password
+          </a>
+        </div>
+        
+        <p style="margin-bottom: 15px; color: #64748b; font-size: 14px;">Or copy and paste this link into your browser:</p>
+        <p style="word-break: break-all; background: #e2e8f0; padding: 12px; border-radius: 6px; font-size: 13px; color: #475569;">
+          ${resetUrl}
+        </p>
+      </div>
+      
+      <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 8px; margin-bottom: 30px;">
+        <p style="margin: 0; color: #92400e; font-size: 14px;">
+          <strong>⚠️ Security Notice:</strong> This link will expire in 1 hour. If you didn't request this password reset, please ignore this email or contact support if you have concerns.
+        </p>
+      </div>
+      
+      <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center;">
+        <p style="color: #94a3b8; font-size: 12px; margin: 0;">
+          Built with ❤️ for Indian freelancers<br>
+          © 2025 Freelance Invoice Tracker. All rights reserved.
+        </p>
+      </div>
+    </body>
+    </html>
+  `
+}
+
 /**
  * Generate HTML content for welcome email
  */

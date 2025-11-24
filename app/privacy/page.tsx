@@ -216,8 +216,9 @@ export default function PrivacyPolicyPage() {
             </p>
             <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
               <p className="text-gray-700 dark:text-gray-300">
-                <strong>Email:</strong> privacy@invoicetracker.com<br />
-                <strong>Address:</strong> India<br />
+                <strong>Name:</strong> Suryansh Singh<br />
+                <strong>Email:</strong> suryanshsingh5654@gmail.com<br />
+                <strong>Location:</strong> Delhi, India<br />
                 <strong>Response Time:</strong> We aim to respond within 48 hours
               </p>
             </div>
