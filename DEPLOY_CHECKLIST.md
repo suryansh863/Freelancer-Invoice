@@ -42,6 +42,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ### 3. Database Setup
 - [ ] Run `supabase/schema-fixed.sql` in Supabase SQL Editor
+- [ ] Run `supabase/security-fix.sql` to fix function security warnings
 - [ ] Verify all tables are created
 - [ ] Test database connection
 
