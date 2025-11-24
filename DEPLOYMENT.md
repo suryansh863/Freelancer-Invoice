@@ -1,4 +1,4 @@
-# Deployment Guide - Freelance Invoice Tracker
+# Deployment Guide - Invoicraft
 
 ## 🚀 Quick Deploy to Vercel (Recommended)
 
@@ -77,8 +77,7 @@ npm start
 - [ ] Test user registration
 - [ ] Test login/logout
 - [ ] Create a test invoice
-- [ ] Test payment flow (use Razorpay test mode)
-- [ ] Verify email notifications (if configured)
+- [ ] Test payment flow (usgured)
 - [ ] Test on mobile devices
 - [ ] Check all pages load correctly
 
