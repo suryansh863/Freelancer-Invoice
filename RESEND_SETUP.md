@@ -14,7 +14,7 @@ This guide will help you set up Resend for sending password reset emails and oth
 
 1. After logging in, go to **API Keys** in the dashboard
 2. Click "Create API Key"
-3. Give it a name like "Invoice Tracker Production"
+3. Give it a name like "Invoicraft Production"
 4. Select permissions: **Sending access**
 5. Click "Create"
 6. **Copy the API key** (you won't see it again!)

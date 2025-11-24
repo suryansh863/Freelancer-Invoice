@@ -5,7 +5,7 @@ export default function Home() {
 }
 
 export const metadata = {
-  title: 'Freelance Invoice Tracker - Built for Indian Freelancers',
+  title: 'Invoicraft - Built for Indian Freelancers',
   description: 'Simple, compliant invoicing & effortless payments. GST-compliant invoices, automatic TDS calculations, and UPI payment links for Indian freelancers.',
   keywords: 'invoice, freelancer, India, GST, TDS, UPI, payment tracking, invoicing tool',
 }

@@ -290,7 +290,7 @@ export default function DashboardPage() {
             </svg>
           </div>
           <div className="flex-1">
-            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Welcome to Invoice Tracker! 🎉</h4>
+            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Welcome to Invoicraft! 🎉</h4>
             <p className="text-gray-700 dark:text-gray-300 mb-4">
               Manage your freelance business with GST-compliant invoices, automatic TDS calculation, and seamless payment tracking.
             </p>

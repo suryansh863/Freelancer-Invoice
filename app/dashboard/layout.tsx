@@ -31,7 +31,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 <div className="h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
                 <Link href="/dashboard" className="flex items-center group">
                   <span className="text-2xl font-bold group-hover:scale-110 transition-transform">💰</span>
-                  <span className="ml-2 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Invoice Tracker</span>
+                  <span className="ml-2 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Invoicraft</span>
                 </Link>
               </div>
               

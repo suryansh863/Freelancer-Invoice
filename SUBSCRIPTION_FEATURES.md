@@ -199,4 +199,4 @@ const limits = getFeatureLimits(userPlan)
 
 ---
 
-**Your invoice tracker now has a complete subscription-based feature system!** 🎉
+**Your Invoicraft now has a complete subscription-based feature system!** 🎉

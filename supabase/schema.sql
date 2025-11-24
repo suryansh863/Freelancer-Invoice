@@ -1,4 +1,4 @@
--- Freelance Invoice Tracker - Complete Database Schema
+-- Invoicraft - Complete Database Schema
 -- Run this SQL in your Supabase SQL Editor
 
 -- Enable UUID extension

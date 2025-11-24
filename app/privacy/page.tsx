@@ -11,7 +11,7 @@ export default function PrivacyPolicyPage() {
         <div className="text-center mb-12">
           <Link href="/" className="inline-block mb-6">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-              💰 Invoice Tracker
+              💰 Invoicraft
             </h1>
           </Link>
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Privacy Policy</h2>
@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">1. Introduction</h3>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              Welcome to Freelance Invoice Tracker. We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Service.
+              Welcome to Invoicraft. We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Service.
             </p>
           </section>
 

@@ -1,6 +1,6 @@
 # Razorpay Payment Integration Setup
 
-This guide will help you set up Razorpay payment integration for your Freelance Invoice Tracker.
+This guide will help you set up Razorpay payment integration for your Invoicraft.
 
 ## Features
 

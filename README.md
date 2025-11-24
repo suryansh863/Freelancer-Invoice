@@ -1,4 +1,4 @@
-# 💰 Freelance Invoice Tracker
+# 💰 Invoicraft
 
 A modern, responsive landing page for an invoicing and payment tracking tool built specifically for Indian freelancers.
 

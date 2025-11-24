@@ -23,7 +23,7 @@ export async function sendWelcomeEmail({ name, email, profession }: SendWelcomeE
     const { data, error } = await resend.emails.send({
       from: process.env.FROM_EMAIL!,
       to: [email],
-      subject: 'Welcome to Freelance Invoice Tracker Waitlist! 🎉',
+      subject: 'Welcome to Invoicraft Waitlist! 🎉',
       html: generateWelcomeEmailHTML({ name, profession })
     })
 
@@ -62,7 +62,7 @@ export async function sendPasswordResetEmail({ name, email, resetToken }: SendPa
     const { data, error } = await resend.emails.send({
       from: process.env.FROM_EMAIL!,
       to: [email],
-      subject: 'Reset Your Password - Invoice Tracker',
+      subject: 'Reset Your Password - Invoicraft',
       html: generatePasswordResetEmailHTML({ name, resetUrl })
     })
 
@@ -93,7 +93,7 @@ function generatePasswordResetEmailHTML({ name, resetUrl }: { name: string; rese
     </head>
     <body style="font-family: 'Inter', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="text-align: center; margin-bottom: 30px;">
-        <h1 style="color: #2563eb; font-size: 28px; margin-bottom: 10px;">💰 Invoice Tracker</h1>
+        <h1 style="color: #2563eb; font-size: 28px; margin-bottom: 10px;">💰 Invoicraft</h1>
         <p style="color: #64748b; font-size: 16px;">Password Reset Request</p>
       </div>
       
@@ -122,7 +122,7 @@ function generatePasswordResetEmailHTML({ name, resetUrl }: { name: string; rese
       <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center;">
         <p style="color: #94a3b8; font-size: 12px; margin: 0;">
           Built with ❤️ for Indian freelancers<br>
-          © 2025 Freelance Invoice Tracker. All rights reserved.
+          © 2025 Invoicraft. All rights reserved.
         </p>
       </div>
     </body>
@@ -140,17 +140,17 @@ function generateWelcomeEmailHTML({ name, profession }: { name: string; professi
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Welcome to Freelance Invoice Tracker</title>
+      <title>Welcome to Invoicraft</title>
     </head>
     <body style="font-family: 'Inter', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="text-align: center; margin-bottom: 30px;">
-        <h1 style="color: #2563eb; font-size: 28px; margin-bottom: 10px;">💰 Freelance Invoice Tracker</h1>
+        <h1 style="color: #2563eb; font-size: 28px; margin-bottom: 10px;">💰 Invoicraft</h1>
         <p style="color: #64748b; font-size: 16px;">Built for Indian Freelancers</p>
       </div>
       
       <div style="background: #f8fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
         <h2 style="color: #1e293b; margin-bottom: 15px;">Welcome aboard, ${name}! 🎉</h2>
-        <p style="margin-bottom: 15px;">Thank you for joining the Freelance Invoice Tracker waitlist! We're excited to have a ${profession.toLowerCase()} like you in our community.</p>
+        <p style="margin-bottom: 15px;">Thank you for joining the Invoicraft waitlist! We're excited to have a ${profession.toLowerCase()} like you in our community.</p>
         
         <p style="margin-bottom: 15px;">You're now part of an exclusive group of Indian freelancers who will get:</p>
         <ul style="color: #475569; margin-bottom: 20px;">
@@ -180,7 +180,7 @@ function generateWelcomeEmailHTML({ name, profession }: { name: string; professi
       <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center;">
         <p style="color: #94a3b8; font-size: 12px; margin: 0;">
           Built with ❤️ for Indian freelancers<br>
-          © 2025 Freelance Invoice Tracker. All rights reserved.
+          © 2025 Invoicraft. All rights reserved.
         </p>
       </div>
     </body>

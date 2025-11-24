@@ -195,7 +195,7 @@ const FreelanceInvoiceTracker: React.FC = () => {
             <div className="flex items-center space-x-2 group">
               <div className="text-3xl transform group-hover:scale-110 transition-transform">💰</div>
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Invoice Tracker
+                Invoicraft
               </span>
             </div>
             <div className="flex items-center space-x-3">
@@ -528,7 +528,7 @@ const FreelanceInvoiceTracker: React.FC = () => {
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <span className="text-3xl">💰</span>
-            <span className="text-xl font-bold">Invoice Tracker</span>
+            <span className="text-xl font-bold">Invoicraft</span>
           </div>
           <p className="text-gray-400 mb-6">
             Built with ❤️ for Indian Freelancers
@@ -541,7 +541,7 @@ const FreelanceInvoiceTracker: React.FC = () => {
             <a href="#waitlist-form" className="hover:text-white transition-colors">Waitlist</a>
           </div>
           <p className="text-gray-500 text-sm mt-6">
-            © 2025 Invoice Tracker. All rights reserved.
+            © 2025 Invoicraft. All rights reserved.
           </p>
         </div>
       </footer>

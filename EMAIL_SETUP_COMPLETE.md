@@ -2,7 +2,7 @@
 
 ## 🎉 What's Been Implemented
 
-Your Invoice Tracker now has a complete password reset system with email notifications powered by Resend!
+Your Invoicraft now has a complete password reset system with email notifications powered by Resend!
 
 ### ✅ Features Added
 

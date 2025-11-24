@@ -104,7 +104,7 @@ const FreelanceInvoiceTracker: React.FC = () => {
 
   const faqs = [
     {
-      question: 'Is Freelance Invoice Tracker free to use?',
+      question: 'Is Invoicraft free to use?',
       answer: 'We offer a 14-day free trial. After that, it\'s just ₹299/month - much more affordable than Zoho (₹1200+) or FreshBooks (₹1500+). No hidden fees, no per-invoice charges.'
     },
     {
@@ -132,7 +132,7 @@ const FreelanceInvoiceTracker: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <div className="text-2xl font-bold text-blue-600">💰 Freelance Invoice Tracker</div>
+              <div className="text-2xl font-bold text-blue-600">💰 Invoicraft</div>
             </div>
             <button 
               onClick={() => document.getElementById('waitlist-form')?.scrollIntoView({ behavior: 'smooth' })}
@@ -291,7 +291,7 @@ const FreelanceInvoiceTracker: React.FC = () => {
               Frequently Asked Questions
             </h2>
             <p className="text-xl text-gray-600">
-              Everything you need to know about Freelance Invoice Tracker
+              Everything you need to know about Invoicraft
             </p>
           </div>
 
@@ -328,10 +328,10 @@ const FreelanceInvoiceTracker: React.FC = () => {
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="text-2xl font-bold mb-4">💰 Freelance Invoice Tracker</div>
+            <div className="text-2xl font-bold mb-4">💰 Invoicraft</div>
             <p className="text-gray-400 mb-4">Built with ❤️ for Indian freelancers</p>
             <p className="text-sm text-gray-500">
-              © 2025 Freelance Invoice Tracker. All rights reserved. | 
+              © 2025 Invoicraft. All rights reserved. | 
               <span className="ml-2">Privacy: We never share your data with third parties.</span>
             </p>
           </div>

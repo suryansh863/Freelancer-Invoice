@@ -1,6 +1,6 @@
 # Backend Setup Instructions
 
-This guide will help you set up the backend functionality for the Freelance Invoice Tracker landing page.
+This guide will help you set up the backend functionality for the Invoicraft landing page.
 
 ## 🚀 Quick Start
 

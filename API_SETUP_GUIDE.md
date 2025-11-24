@@ -1,6 +1,6 @@
 # 🔑 Complete API Setup Guide
 
-## Required APIs for Your Invoice Tracker
+## Required APIs for Your Invoicraft
 
 Your website needs **2 CRITICAL APIs** to function properly:
 

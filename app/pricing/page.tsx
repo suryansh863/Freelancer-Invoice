@@ -158,7 +158,7 @@ export default function PricingPage() {
         <div className="text-center mb-12">
           <Link href="/" className="inline-block mb-6">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-              💰 Invoice Tracker
+              💰 Invoicraft
             </h1>
           </Link>
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">

@@ -11,7 +11,7 @@ export default function TermsOfServicePage() {
         <div className="text-center mb-12">
           <Link href="/" className="inline-block mb-6">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-              💰 Invoice Tracker
+              💰 Invoicraft
             </h1>
           </Link>
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Terms of Service</h2>
@@ -23,14 +23,14 @@ export default function TermsOfServicePage() {
           <section>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">1. Acceptance of Terms</h3>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              By accessing and using Freelance Invoice Tracker ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these Terms of Service, please do not use the Service.
+              By accessing and using Invoicraft ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these Terms of Service, please do not use the Service.
             </p>
           </section>
 
           <section>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">2. Description of Service</h3>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
-              Freelance Invoice Tracker provides a web-based platform for freelancers and small businesses to:
+              Invoicraft provides a web-based platform for freelancers and small businesses to:
             </p>
             <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-2 ml-4">
               <li>Create and manage professional invoices</li>
@@ -95,7 +95,7 @@ export default function TermsOfServicePage() {
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">7. Intellectual Property</h3>
             <div className="space-y-3 text-gray-700 dark:text-gray-300">
               <p className="leading-relaxed">
-                <strong>7.1 Service Content:</strong> All content, features, and functionality of the Service are owned by Freelance Invoice Tracker and are protected by copyright, trademark, and other intellectual property laws.
+                <strong>7.1 Service Content:</strong> All content, features, and functionality of the Service are owned by Invoicraft and are protected by copyright, trademark, and other intellectual property laws.
               </p>
               <p className="leading-relaxed">
                 <strong>7.2 User Content:</strong> You retain all rights to the data you input into the Service (invoices, client information, etc.). By using the Service, you grant us a license to store and process this data to provide the Service.
@@ -113,7 +113,7 @@ export default function TermsOfServicePage() {
           <section>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">9. Limitation of Liability</h3>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              TO THE MAXIMUM EXTENT PERMITTED BY LAW, FREELANCE INVOICE TRACKER SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES.
+              TO THE MAXIMUM EXTENT PERMITTED BY LAW, INVOICRAFT SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES.
             </p>
           </section>
 
@@ -162,7 +162,7 @@ export default function TermsOfServicePage() {
 
           <section className="pt-6 border-t border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-600 dark:text-gray-400 italic">
-              By using Freelance Invoice Tracker, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
+              By using Invoicraft, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
             </p>
           </section>
         </div>
