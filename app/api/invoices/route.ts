@@ -38,9 +38,29 @@ export async function POST(request: NextRequest) {
       try {
         const invoiceToCreate = {
           client_id,
-          ...invoiceData,
+          user_id: 'demo-user',
+          invoice_date: invoiceData.invoice_date || new Date().toISOString().split('T')[0],
+          issue_date: invoiceData.invoice_date || new Date().toISOString().split('T')[0],
+          due_date: invoiceData.due_date || new Date().toISOString().split('T')[0],
+          notes: invoiceData.notes || '',
+          status: 'draft' as const,
+          payment_status: 'pending' as const,
+          paid_amount: 0,
           amount: totals.subtotal,
-          ...totals
+          total_amount: totals.totalAmount,
+          subtotal: totals.subtotal,
+          tax_rate: totals.taxRate,
+          tax_amount: totals.taxAmount,
+          cgst_rate: totals.cgstRate,
+          cgst_amount: totals.cgstAmount,
+          sgst_rate: totals.sgstRate,
+          sgst_amount: totals.sgstAmount,
+          igst_rate: totals.igstRate,
+          igst_amount: totals.igstAmount,
+          tds_rate: totals.tdsRate,
+          tds_amount: totals.tdsAmount,
+          discount_amount: 0,
+          discount_type: 'percentage' as const
         }
 
         newInvoice = demoStorage.addInvoice(invoiceToCreate, items)
