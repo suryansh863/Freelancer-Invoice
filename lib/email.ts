@@ -80,6 +80,102 @@ export async function sendPasswordResetEmail({ name, email, resetToken }: SendPa
 }
 
 /**
+ * Send admin notification when someone joins waitlist
+ */
+export async function sendAdminNotification({ name, email, profession }: SendWelcomeEmailParams) {
+  // Skip if Resend is not configured or admin email not set
+  const adminEmail = process.env.ADMIN_EMAIL || 'suryanshsingh5654@gmail.com'
+  
+  if (!resend || !process.env.FROM_EMAIL) {
+    console.log('Email service not configured, skipping admin notification')
+    return { success: true, message: 'Email service not configured' }
+  }
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: process.env.FROM_EMAIL!,
+      to: [adminEmail],
+      subject: '🎉 New Waitlist Signup - Invoicraft',
+      html: generateAdminNotificationHTML({ name, email, profession })
+    })
+
+    if (error) {
+      console.error('Failed to send admin notification:', error)
+      return { success: false, error: error.message }
+    }
+
+    console.log('Admin notification sent successfully:', data?.id)
+    return { success: true, data }
+  } catch (error) {
+    console.error('Admin notification error:', error)
+    return { success: false, error: 'Failed to send admin notification' }
+  }
+}
+
+/**
+ * Generate HTML content for admin notification
+ */
+function generateAdminNotificationHTML({ name, email, profession }: { name: string; email: string; profession: string }) {
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>New Waitlist Signup</title>
+    </head>
+    <body style="font-family: 'Inter', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="color: #2563eb; font-size: 28px; margin-bottom: 10px;">💰 Invoicraft</h1>
+        <p style="color: #64748b; font-size: 16px;">New Waitlist Signup</p>
+      </div>
+      
+      <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+        <h2 style="color: #166534; margin-bottom: 15px;">🎉 Someone just joined your waitlist!</h2>
+      </div>
+      
+      <div style="background: #f8fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+        <h3 style="color: #1e293b; margin-bottom: 20px;">User Details:</h3>
+        
+        <div style="margin-bottom: 15px;">
+          <strong style="color: #64748b;">Name:</strong><br>
+          <span style="color: #1e293b; font-size: 18px;">${name}</span>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+          <strong style="color: #64748b;">Email:</strong><br>
+          <a href="mailto:${email}" style="color: #2563eb; text-decoration: none; font-size: 16px;">${email}</a>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+          <strong style="color: #64748b;">Profession:</strong><br>
+          <span style="color: #1e293b; font-size: 16px;">${profession}</span>
+        </div>
+        
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+          <strong style="color: #64748b;">Signed up:</strong><br>
+          <span style="color: #1e293b;">${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</span>
+        </div>
+      </div>
+      
+      <div style="background: #eff6ff; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+        <p style="margin: 0; color: #1e40af; font-size: 14px;">
+          <strong>💡 Next Steps:</strong> You can reach out to ${name} at ${email} to welcome them personally or provide early access.
+        </p>
+      </div>
+      
+      <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center;">
+        <p style="color: #94a3b8; font-size: 12px; margin: 0;">
+          This is an automated notification from Invoicraft<br>
+          © 2025 Invoicraft. All rights reserved.
+        </p>
+      </div>
+    </body>
+    </html>
+  `
+}
+
+/**
  * Generate HTML content for password reset email
  */
 function generatePasswordResetEmailHTML({ name, resetUrl }: { name: string; resetUrl: string }) {

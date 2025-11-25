@@ -116,6 +116,15 @@ export async function POST(request: NextRequest) {
       // Don't fail the signup if email fails
     }
 
+    // Send admin notification (optional)
+    const { sendAdminNotification } = await import('@/lib/email')
+    const adminNotification = await sendAdminNotification({ name, email, profession })
+    
+    if (!adminNotification.success) {
+      console.warn('Admin notification failed:', adminNotification.error)
+      // Don't fail the signup if admin notification fails
+    }
+
     // Return success response
     return NextResponse.json<ApiResponse>({
       success: true,
