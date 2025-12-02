@@ -109,20 +109,32 @@ export async function POST(request: NextRequest) {
     }
 
     // Send welcome email (optional, won't fail if email service is not configured)
+    console.log(`[WAITLIST] Attempting to send welcome email to: ${email}`)
     const emailResult = await sendWelcomeEmail({ name, email, profession })
     
     if (!emailResult.success) {
-      console.warn('Welcome email failed:', emailResult.error)
-      // Don't fail the signup if email fails
+      console.error('[WAITLIST] Welcome email FAILED:', {
+        email,
+        error: emailResult.error,
+        message: emailResult.message
+      })
+    } else {
+      console.log('[WAITLIST] Welcome email sent successfully to:', email)
     }
 
     // Send admin notification (optional)
+    console.log(`[WAITLIST] Attempting to send admin notification for: ${name} (${email})`)
     const { sendAdminNotification } = await import('@/lib/email')
     const adminNotification = await sendAdminNotification({ name, email, profession })
     
     if (!adminNotification.success) {
-      console.warn('Admin notification failed:', adminNotification.error)
-      // Don't fail the signup if admin notification fails
+      console.error('[WAITLIST] Admin notification FAILED:', {
+        adminEmail: process.env.ADMIN_EMAIL || 'suryanshsingh5654@gmail.com',
+        error: adminNotification.error,
+        message: adminNotification.message
+      })
+    } else {
+      console.log('[WAITLIST] Admin notification sent successfully')
     }
 
     // Return success response

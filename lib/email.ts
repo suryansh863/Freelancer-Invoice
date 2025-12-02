@@ -15,9 +15,20 @@ interface SendWelcomeEmailParams {
 export async function sendWelcomeEmail({ name, email, profession }: SendWelcomeEmailParams) {
   // Skip email sending if Resend is not configured
   if (!resend || !process.env.FROM_EMAIL) {
-    console.log('Email service not configured, skipping welcome email')
-    return { success: true, message: 'Email service not configured' }
+    console.error('[EMAIL] Resend not configured:', {
+      hasResend: !!resend,
+      hasFromEmail: !!process.env.FROM_EMAIL,
+      resendApiKey: process.env.RESEND_API_KEY ? 'SET' : 'NOT SET'
+    })
+    return { success: false, message: 'Email service not configured' }
   }
+
+  console.log('[EMAIL] Sending welcome email:', {
+    to: email,
+    from: process.env.FROM_EMAIL,
+    name,
+    profession
+  })
 
   try {
     const { data, error } = await resend.emails.send({
@@ -28,14 +39,25 @@ export async function sendWelcomeEmail({ name, email, profession }: SendWelcomeE
     })
 
     if (error) {
-      console.error('Failed to send welcome email:', error)
+      console.error('[EMAIL] Resend API error:', {
+        error,
+        email,
+        errorMessage: error.message
+      })
       return { success: false, error: error.message }
     }
 
-    console.log('Welcome email sent successfully:', data?.id)
+    console.log('[EMAIL] Welcome email sent successfully:', {
+      emailId: data?.id,
+      to: email
+    })
     return { success: true, data }
   } catch (error) {
-    console.error('Email service error:', error)
+    console.error('[EMAIL] Exception while sending:', {
+      error,
+      email,
+      errorMessage: error instanceof Error ? error.message : 'Unknown error'
+    })
     return { success: false, error: 'Failed to send welcome email' }
   }
 }
@@ -87,9 +109,20 @@ export async function sendAdminNotification({ name, email, profession }: SendWel
   const adminEmail = process.env.ADMIN_EMAIL || 'suryanshsingh5654@gmail.com'
   
   if (!resend || !process.env.FROM_EMAIL) {
-    console.log('Email service not configured, skipping admin notification')
-    return { success: true, message: 'Email service not configured' }
+    console.error('[EMAIL] Admin notification - Resend not configured:', {
+      hasResend: !!resend,
+      hasFromEmail: !!process.env.FROM_EMAIL,
+      adminEmail
+    })
+    return { success: false, message: 'Email service not configured' }
   }
+
+  console.log('[EMAIL] Sending admin notification:', {
+    to: adminEmail,
+    from: process.env.FROM_EMAIL,
+    userEmail: email,
+    userName: name
+  })
 
   try {
     const { data, error } = await resend.emails.send({
@@ -100,14 +133,25 @@ export async function sendAdminNotification({ name, email, profession }: SendWel
     })
 
     if (error) {
-      console.error('Failed to send admin notification:', error)
+      console.error('[EMAIL] Admin notification - Resend API error:', {
+        error,
+        adminEmail,
+        errorMessage: error.message
+      })
       return { success: false, error: error.message }
     }
 
-    console.log('Admin notification sent successfully:', data?.id)
+    console.log('[EMAIL] Admin notification sent successfully:', {
+      emailId: data?.id,
+      to: adminEmail
+    })
     return { success: true, data }
   } catch (error) {
-    console.error('Admin notification error:', error)
+    console.error('[EMAIL] Admin notification - Exception:', {
+      error,
+      adminEmail,
+      errorMessage: error instanceof Error ? error.message : 'Unknown error'
+    })
     return { success: false, error: 'Failed to send admin notification' }
   }
 }
