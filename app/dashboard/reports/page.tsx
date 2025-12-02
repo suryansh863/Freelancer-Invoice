@@ -290,17 +290,17 @@ export default function ReportsPage() {
       </div>
 
       {/* Export Options */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+      <div className="bg-blue-50 dark:bg-gray-800 border border-blue-200 dark:border-gray-700 rounded-lg p-6">
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="text-lg font-medium text-blue-900 mb-1">Export Reports</h4>
-            <p className="text-blue-800">Download your business data for accounting and tax purposes</p>
+            <h4 className="text-lg font-medium text-blue-900 dark:text-white mb-1">Export Reports</h4>
+            <p className="text-blue-800 dark:text-gray-400">Download your business data for accounting and tax purposes</p>
           </div>
           <div className="flex space-x-3">
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+            <button className="px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors">
               Export CSV
             </button>
-            <button className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors">
+            <button className="px-4 py-2 border border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-400 rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors">
               Export PDF
             </button>
           </div>
