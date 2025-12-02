@@ -81,14 +81,13 @@ export async function PUT(
     const invoiceId = params.id
     const body = await request.json()
     
-    // Extract items from body
-    const { items, tax_rate, tds_rate, ...invoiceData } = body
+    // Extract items and other data from body
+    const { items, tax_rate, tds_rate, client_id, invoice_date, due_date, description, notes, upi_id } = body
     
     // Calculate totals if items are provided
-    let totals = {}
-    if (items && Array.isArray(items)) {
-      totals = calculateInvoiceTotals(items, tax_rate || 0, tds_rate || 0, 'individual', false)
-    }
+    const totals = items && Array.isArray(items) 
+      ? calculateInvoiceTotals(items, tax_rate || 0, tds_rate || 0, 'individual', false)
+      : {}
     
     // For demo mode, just return success
     if (shouldUseFallback()) {
@@ -99,13 +98,35 @@ export async function PUT(
       })
     }
 
-    // Prepare invoice data with calculated totals
-    const invoiceUpdateData = {
-      ...invoiceData,
-      ...totals
+    // Prepare invoice data with only valid database fields
+    const invoiceUpdateData: any = {
+      client_id,
+      invoice_date,
+      due_date: due_date || null,
+      description: description || null,
+      notes: notes || null,
+      upi_id: upi_id || null,
+      updated_at: new Date().toISOString()
     }
 
-    // Update invoice in Supabase (without items)
+    // Add calculated totals if items were provided
+    if (Object.keys(totals).length > 0) {
+      const calculatedTotals = totals as any
+      invoiceUpdateData.amount = calculatedTotals.subtotal
+      invoiceUpdateData.tax_rate = calculatedTotals.taxRate
+      invoiceUpdateData.tax_amount = calculatedTotals.taxAmount
+      invoiceUpdateData.cgst_rate = calculatedTotals.cgstRate
+      invoiceUpdateData.cgst_amount = calculatedTotals.cgstAmount
+      invoiceUpdateData.sgst_rate = calculatedTotals.sgstRate
+      invoiceUpdateData.sgst_amount = calculatedTotals.sgstAmount
+      invoiceUpdateData.igst_rate = calculatedTotals.igstRate
+      invoiceUpdateData.igst_amount = calculatedTotals.igstAmount
+      invoiceUpdateData.tds_rate = calculatedTotals.tdsRate
+      invoiceUpdateData.tds_amount = calculatedTotals.tdsAmount
+      invoiceUpdateData.total_amount = calculatedTotals.totalAmount
+    }
+
+    // Update invoice in Supabase
     const { data: updatedInvoice, error: invoiceError } = await supabaseAdmin
       .from('invoices')
       .update(invoiceUpdateData)
