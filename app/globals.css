@@ -2,6 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile-specific improvements */
+@layer base {
+  /* Prevent zoom on input focus on iOS */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  textarea,
+  select {
+    font-size: 16px;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Better touch targets */
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    touch-action: manipulation;
+  }
+}
+
+/* PWA specific styles */
+@media (display-mode: standalone) {
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  
+  /* Hide scrollbars in standalone mode */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Mobile responsive table improvements */
+@layer components {
+  .mobile-table {
+    @apply block md:table;
+  }
+  
+  .mobile-table thead {
+    @apply hidden md:table-header-group;
+  }
+  
+  .mobile-table tbody {
+    @apply block md:table-row-group;
+  }
+  
+  .mobile-table tr {
+    @apply block md:table-row border-b border-gray-200 dark:border-gray-700 mb-4 md:mb-0 p-4 md:p-0 bg-white dark:bg-gray-800 rounded-lg md:rounded-none shadow md:shadow-none;
+  }
+  
+  .mobile-table td {
+    @apply block md:table-cell text-right md:text-left border-none md:border-b md:border-gray-200 md:dark:border-gray-700 py-2 md:py-4 px-0 md:px-6;
+  }
+  
+  .mobile-table td:before {
+    content: attr(data-label) ": ";
+    @apply font-medium text-gray-600 dark:text-gray-400 float-left md:hidden;
+  }
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 html {

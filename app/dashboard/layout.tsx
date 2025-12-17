@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import ThemeToggle from '@/app/components/ThemeToggle'
 import AuthCheck from './auth-check'
@@ -10,6 +10,8 @@ interface DashboardLayoutProps {
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
     <AuthCheck>
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
@@ -17,10 +19,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <nav className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
-              <div className="flex items-center space-x-4">
+              {/* Left side - Logo */}
+              <div className="flex items-center space-x-2 sm:space-x-4">
                 <Link 
                   href="/" 
-                  className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors"
+                  className="hidden sm:flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors"
                   title="Back to Landing Page"
                 >
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,14 +31,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   </svg>
                   <span className="text-sm font-medium">Back to Home</span>
                 </Link>
-                <div className="h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
+                <div className="hidden sm:block h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
                 <Link href="/dashboard" className="flex items-center group">
                   <span className="text-2xl font-bold group-hover:scale-110 transition-transform">💰</span>
-                  <span className="ml-2 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Invoicraft</span>
+                  <span className="ml-2 text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Invoicraft</span>
                 </Link>
               </div>
               
-              <div className="flex items-center space-x-2">
+              {/* Desktop Navigation */}
+              <div className="hidden lg:flex items-center space-x-2">
                 <Link 
                   href="/dashboard" 
                   className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -77,7 +81,81 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 </Link>
                 <ThemeToggle />
               </div>
+
+              {/* Mobile menu button and theme toggle */}
+              <div className="flex lg:hidden items-center space-x-2">
+                <ThemeToggle />
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-lg transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {mobileMenuOpen ? (
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    ) : (
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    )}
+                  </svg>
+                </button>
+              </div>
             </div>
+
+            {/* Mobile Navigation Menu */}
+            {mobileMenuOpen && (
+              <div className="lg:hidden border-t border-gray-200 dark:border-gray-700 py-4">
+                <div className="flex flex-col space-y-2">
+                  <Link 
+                    href="/dashboard" 
+                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-100 dark:hover:bg-gray-700"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    📊 Dashboard
+                  </Link>
+                  <Link 
+                    href="/dashboard/invoices" 
+                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-100 dark:hover:bg-gray-700"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    📄 Invoices
+                  </Link>
+                  <Link 
+                    href="/dashboard/clients" 
+                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-100 dark:hover:bg-gray-700"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    👥 Clients
+                  </Link>
+                  <Link 
+                    href="/pricing" 
+                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-100 dark:hover:bg-gray-700"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    💎 Pricing
+                  </Link>
+                  <Link 
+                    href="/dashboard/profile" 
+                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-100 dark:hover:bg-gray-700"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    👤 Profile
+                  </Link>
+                  <Link 
+                    href="/dashboard/invoices/new" 
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all mt-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    ➕ New Invoice
+                  </Link>
+                  <Link 
+                    href="/" 
+                    className="text-gray-600 dark:text-gray-400 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-100 dark:hover:bg-gray-700 border-t border-gray-200 dark:border-gray-700 mt-2 pt-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    🏠 Back to Home
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         </nav>
 

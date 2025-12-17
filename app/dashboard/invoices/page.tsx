@@ -218,31 +218,33 @@ export default function InvoicesPage() {
             )}
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50 dark:bg-gray-900/50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Invoice
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Client
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Amount
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Due Date
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+          <>
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50 dark:bg-gray-900/50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Invoice
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Client
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Amount
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Due Date
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {filteredInvoices.map((invoice) => {
                   const status = getInvoiceStatus(invoice)
                   return (
@@ -313,7 +315,80 @@ export default function InvoicesPage() {
                 })}
               </tbody>
             </table>
-          </div>
+            </div>
+
+            {/* Mobile Card Layout */}
+            <div className="md:hidden space-y-4">
+              {filteredInvoices.map((invoice) => {
+                const status = getInvoiceStatus(invoice)
+                return (
+                  <div key={invoice.id} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <Link
+                          href={`/dashboard/invoices/${invoice.id}`}
+                          className="text-lg font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+                        >
+                          {invoice.invoice_number}
+                        </Link>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {new Date(invoice.invoice_date).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${getStatusColor(status)}`}>
+                        {status}
+                      </span>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Client:</span>
+                        <span className="text-sm font-medium text-gray-900 dark:text-white">
+                          {invoice.client?.name || 'Unknown Client'}
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Amount:</span>
+                        <span className="text-sm font-medium text-gray-900 dark:text-white">
+                          {formatCurrency(invoice.total_amount)}
+                        </span>
+                      </div>
+                      
+                      {invoice.due_date && (
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Due Date:</span>
+                          <span className="text-sm text-gray-900 dark:text-white">
+                            {new Date(invoice.due_date).toLocaleDateString()}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="flex justify-between items-center mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+                      <Link
+                        href={`/dashboard/invoices/${invoice.id}`}
+                        className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
+                      >
+                        View Details
+                      </Link>
+                      <div className="flex space-x-2">
+                        <Link
+                          href={`/dashboard/invoices/${invoice.id}/edit`}
+                          className="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 p-1"
+                          title="Edit Invoice"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                          </svg>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </>
         )}
       </div>
     </div>
